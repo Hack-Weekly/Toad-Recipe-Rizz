@@ -11,7 +11,7 @@ Once you've created a project and installed dependencies with `yarn`, start a de
 
 ```bash
 # or start the server and open the app in a new browser tab
-yarn run dev -- --open
+yarn run dev
 ```
 
 ## Building
