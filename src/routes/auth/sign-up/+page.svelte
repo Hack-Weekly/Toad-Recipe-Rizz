@@ -10,9 +10,9 @@
     {#if form?.message}
         <p>{form.message}</p>
     {/if}
-    <input type="email" name="email" class="bg-gray-500">
-    <input type="text" name="username" class="bg-gray-500">
-    <input type="text" name="password" class="bg-gray-500">
-    <button type="submit" class="border-4 border-green-500">submit</button>
+    <input type="email" name="email" placeholder="Enter email" class="bg-gray-200">
+    <input type="text" name="username" placeholder="Enter username" class="bg-gray-200">
+    <input type="password" name="password" placeholder="Enter password" class="bg-gray-200">
+    <button type="submit" class="bg-black rounded-md text-white py-2 px-3">submit</button>
 </form>
 
