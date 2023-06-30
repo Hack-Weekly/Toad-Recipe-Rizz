@@ -1,0 +1,18 @@
+<script lang="ts">
+    // Auth could not be tested through postman since im supposed to receive the form from the page directly, so here is a simple form.
+    // So to my understanding the password in input will be stored not in a password row but directly within the lucia key, just a fyi i guess.
+    import { enhance } from "$app/forms";
+    import type { ActionData } from "./$types";
+    export let form: ActionData
+</script>
+
+<form method="POST" use:enhance>
+    {#if form?.message}
+        <p>{form.message}</p>
+    {/if}
+    <input type="email" name="email" class="bg-gray-500">
+    <input type="text" name="username" class="bg-gray-500">
+    <input type="text" name="password" class="bg-gray-500">
+    <button type="submit" class="border-4 border-green-500">submit</button>
+</form>
+
