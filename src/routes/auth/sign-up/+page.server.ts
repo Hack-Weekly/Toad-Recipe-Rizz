@@ -1,9 +1,16 @@
-import type { Actions } from "@sveltejs/kit";
+import { redirect, type Actions } from "@sveltejs/kit";
 import { fail } from "@sveltejs/kit";
 import { auth } from "$lib/server/lucia";
+import type { PageServerLoad } from "./$types";
+
+export const load: PageServerLoad = async ({ locals }) => {
+    const { session } = await locals.auth.validateUser()
+    console.log(session)
+    if (session) throw redirect(302, "http://localhost:5173/feed")
+}
 
 export const actions: Actions = {
-    default: async ({ request }) => {
+    default: async ({ request, url }) => {
         const newCredentials = await request.formData()
         // key values to string conversion
         const { email, username, password } = Object.fromEntries(newCredentials) as Record<string, string>
