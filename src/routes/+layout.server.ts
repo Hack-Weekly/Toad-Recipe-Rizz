@@ -4,7 +4,7 @@ import type { LayoutServerLoad } from "./$types";
 // REDIRECTING THE USER TO HIS FEED WHENEVER THEY HAVE A ACTIVE SESSION AND TRY TO GO TO SIGN-IN OR SIGN-UP PAGES, SINCE THEY DO NOT NEED TO BE THERE
 
 const goToFeed = () => { 
-    throw redirect(302, "http://localhost:5173/feed")
+    throw redirect(302, "http://localhost:5173")
 }
 
 export const load: LayoutServerLoad = async ({ locals, url }) => {
@@ -17,5 +17,4 @@ export const load: LayoutServerLoad = async ({ locals, url }) => {
                 goToFeed()
         }
     }
-    console.log(session)
 }
