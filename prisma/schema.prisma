@@ -9,3 +9,106 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model AuthUser {
+  id            Int             @id @default(autoincrement())
+  email         String
+  username      String
+  auth_session  AuthSession[]
+  auth_key      AuthKey[]
+  picture       String?
+  created_at    DateTime        @default(now())
+  updated_at    DateTime        @updatedAt
+  Profile       Profile[]
+  Recipe        Recipe[]
+  User_Category User_Category[]
+}
+
+model AuthSession {
+  id             Int      @id @default(autoincrement())
+  user_id        Int
+  active_expires BigInt
+  idle_expires   BigInt
+  auth_user      AuthUser @relation(fields: [user_id], references: [id])
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+
+  @@index([user_id])
+}
+
+model AuthKey {
+  id              Int      @id @default(autoincrement())
+  user_id         Int
+  primary_key     Boolean
+  hashed_password String
+  expires         BigInt
+  auth_user       AuthUser @relation(fields: [user_id], references: [id])
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+
+  @@index([user_id])
+}
+
+model Profile {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  name       String
+  slug       String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  user       AuthUser @relation(fields: [user_id], references: [id])
+
+  @@index([user_id])
+}
+
+model Recipe {
+  id              Int               @id @default(autoincrement())
+  user_id         Int
+  name            String
+  slug            String
+  description     String
+  ingredients     Json
+  instructions    Json
+  cook_time       String
+  picture         String
+  created_at      DateTime          @default(now())
+  updated_at      DateTime          @updatedAt
+  user            AuthUser          @relation(fields: [user_id], references: [id])
+  Recipe_Category Recipe_Category[]
+
+  @@index([user_id])
+}
+
+model User_Category {
+  id          Int      @id @default(autoincrement())
+  user_id     Int
+  category_id Int
+  user        AuthUser @relation(fields: [user_id], references: [id])
+  category    Category @relation(fields: [category_id], references: [id])
+
+  @@index([user_id])
+  @@index([category_id])
+}
+
+model Category {
+  id              Int               @id @default(autoincrement())
+  category_id     Int?
+  name            String
+  created_at      DateTime          @default(now())
+  updated_at      DateTime          @updatedAt
+  User_Category   User_Category[]
+  Recipe_Category Recipe_Category[]
+
+  @@index([category_id])
+}
+
+model Recipe_Category {
+  id          Int      @id @default(autoincrement())
+  recipe_id   Int
+  category_id Int
+  recipe      Recipe   @relation(fields: [recipe_id], references: [id])
+  category    Category @relation(fields: [category_id], references: [id])
+
+  @@index([recipe_id])
+  @@index([category_id])
+}
