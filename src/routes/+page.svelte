@@ -11,6 +11,8 @@
     import Communities from '$lib/communities.svelte';
     // @ts-ignore
     import ShortRecipe from '$lib/shortRecipe.svelte';
+    import Profile from '$lib/profile.svelte';
+    import AddRecipe from '$lib/addRecipe.svelte';
 </script>  
 
 <section class="center w-full h-screen flex justify-start items-center flex-col overflow-y-auto">
@@ -36,11 +38,15 @@
         
     </div> -->
 
+    <Profile />
+
+    <AddRecipe />
+
     <!-- <ShortRecipe  />
 
     <Recipe  /> -->
 
-    <Communities  />
+    <!-- <Communities  /> -->
 
     <div class="search w-full p-4 border-b border-gray-300 hidden max-xl:block">
         <div class="search-holder relative flex justify-center items-center">
