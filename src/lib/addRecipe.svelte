@@ -35,39 +35,43 @@
   </script>
 
 
-<div class="profile-container h-full">
+<div class="profile-container px-4 pt-4 h-full">
 
-    <div class="profile-label px-4 py-2 mt-4">
+    <!-- <div class="profile-label px-4 py-2 mt-4">
         <p class="text-black text-xl w-160 h-50">Add Recipe</p>
-    </div>
+    </div> -->
 
-    <div class="flex flex-row justify-center mt-4">
+    <div class="flex flex-row justify-center mt-4 gap-x-4">
         
-        <div class="mt-4 mr-2">
+        <div class="">
             <div class="bg-[#175BCC] rounded-full w-32 h-32 flex items-center justify-center">
               <span class="text-white text-xl">Recipe Pic</span>
             </div>
         </div>
 
-        <div class="mt-4 ml-2">
-            <div class="border-2 border-dashed rounded-lg p-8 bg-[#F3F3F3]">
-              <p class="text-lg text-gray-600 mb-4">Drop photo here to upload</p>
-              <button class="bg-[#E8E8E8] hover:bg-white text-black font-bold py-2 px-4 rounded">
-                Browse files
-              </button>
+        <div class="flex justify-center items-start flex-col gap-y-2">
+
+          <div class="">
+                <div class="border-2 border-dashed rounded-lg p-8 bg-[#F3F3F3]">
+                  <p class="text-lg text-gray-600 mb-4">Drop photo here to upload</p>
+                  <label for="file-input" class="bg-gray-100 border border-black/10 text-black py-1 px-2 rounded">
+                    Browse files
+                  </label>
+                  <input id="file-input" type="file" class="hidden" />                  
+                </div>
             </div>
+    
+            <div class="flex justify-center">
+                <button class="bg-[#FFE1DE] text-white py-1 px-6 rounded-md border border-red-300">
+                    <p class="text-red-700">Delete</p>
+                </button>
+            </div>
+
         </div>
 
     </div>
 
-    <div class="flex justify-center mt-4">
-        <button class="bg-[#FFE1DE] text-white py-2 px-4 rounded-md">
-            <p class="max-sm:hidden text-red-700">Delete</p>
-            <p class="hidden max-sm:block text-white"> P </p>
-        </button>
-    </div>
-
-    <div class="recipe-name-input">
+    <div class="recipe-name-input mt-4">
         <label for="recipe-name" class="block mb-2">Name</label>
         <input type="text" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4" placeholder="Pineapple Ham Pizza">
     </div>
@@ -78,10 +82,9 @@
           <div class="mt-4">
             <label for="description" class="block mb-2">Description</label>
           </div>
-          <div class="mt-4 ml-auto">
+          <!-- <div class="mt-4 ml-auto">
             <label for="description" class="block mb-2">0 / 250</label>
-          </div>
-
+          </div> -->
         </div>
         <div class="relative">
           <textarea id="description" class="w-full h-75 resize-none rounded-md border outline-none border-black/10 bg-gray-100 px-4 py-2" placeholder="Description" maxlength="250"></textarea>
@@ -94,10 +97,9 @@
           <div class="mt-4">
             <label for="instructions" class="block mb-2">Instructions</label>
           </div>
-          <div class="mt-4 ml-auto">
+          <!-- <div class="mt-4 ml-auto">
             <label for="instructions" class="block mb-2">0 / 250</label>
-          </div>
-
+          </div> -->
         </div>
         <div class="relative">
           <textarea id="instructions" class="w-full h-75 resize-none rounded-md border outline-none border-black/10 bg-gray-100 px-4 py-2" placeholder="Instructions" maxlength="250"></textarea>
@@ -128,9 +130,9 @@
             <label for="ingredients" class="block mb-2">Ingredients</label>
           </div>
 
-          <div class="mt-4 ml-auto">
+          <!-- <div class="mt-4 ml-auto">
             <label for="ingredients" class="block mb-2">{addedIngredients.length} / {MAX_CHARACTERS}</label>
-          </div>
+          </div> -->
 
         </div>
 
@@ -147,11 +149,15 @@
         </div>
 
         <div>
-          <button class="mt-2 bg-gray-200 text-gray-700 px-4 py-2 rounded" on:click={addIngredient}>+</button>
+          <button class="mt-2 bg-gray-200 text-gray-700 px-4 py-2 rounded" on:click={addIngredient}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>            
+          </button>
         </div>
 
         {#if addedIngredients.length > 0}
-          <ul class="mt-4">
+          <ul class="mt-4 bg-red-300 w-full">
             {#each addedIngredients as ingredient}
               <li>{ingredient}</li>
             {/each}
@@ -162,7 +168,7 @@
 
     
     
-    <div class="categories-input mt-4">
+    <div class="categories-input mt-8">
         <label for="categories" class="block mb-2">Categories</label>
         <input type="text" id="categories" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4" placeholder="Categories" list="category-options">
         <datalist id="category-options">
@@ -176,10 +182,9 @@
         </datalist>
     </div>
 
-    <div class="w-full h-11 flex justify-start items-center mt-6 max-sm:w-11">
+    <div class="w-full h-11 flex justify-start items-center mt-6">
         <button class="w-full h-full bg-[#121212] text-white rounded-md text-center">
-            <p class="max-sm:hidden text-white"> Save </p>
-            <p class="hidden max-sm:block text-white"> P </p>
+            <p class="text-white"> Save </p>
         </button>
     </div>
 

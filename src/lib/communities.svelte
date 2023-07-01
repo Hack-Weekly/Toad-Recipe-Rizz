@@ -1,4 +1,4 @@
-<div class="communities-list p-8">
+<div class="communities-list p-8 border-b border-gray-300">
         
     <div class="community w-64 h-72 rounded-md overflow-hidden relative after:absolute after:top-0 after:left-0 after:bg-gradient-to-t after:from-zinc-950/90 after:from-50 after:to-transparent after:to-90% after:w-full after:h-full">
 
