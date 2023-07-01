@@ -1,6 +1,14 @@
-import type { Actions } from "@sveltejs/kit";
+import { redirect, type Actions } from "@sveltejs/kit";
 import { fail } from "@sveltejs/kit";
-import { auth } from "$lib/server/lucia";
+import { auth, client } from "$lib/server/lucia";
+import type { PageServerLoad } from "./$types";
+import md5 from 'md5';
+
+export const load: PageServerLoad = async ({ locals }) => {
+    const { session } = await locals.auth.validateUser()
+    console.log(session)
+    if (session) throw redirect(302, "http://localhost:5173/feed")
+}
 
 export const actions: Actions = {
     default: async ({ request }) => {
@@ -42,6 +50,10 @@ export const actions: Actions = {
         
 
         try {
+          // MD5 hash for gravatar default user picture 
+          const hashedEmail = md5(email.toLowerCase().trim())
+          const picture = `https://www.gravatar.com/avatar/${hashedEmail}`
+
           const user =  await auth.createUser({
               primaryKey: {
                   providerId: 'username',
@@ -53,6 +65,24 @@ export const actions: Actions = {
                   picture
               }
             })
+          
+          const profileNameArr = email.split("")
+          const profileName = profileNameArr.splice(0, profileNameArr.indexOf("@")).join("")
+          // Creating Profile Model, Or Row
+          const profile = await client.authUser.update({
+            where: {
+                id: user.id,
+            },
+            data: {
+                Profile: {
+                  create: {
+                     id: user.id,
+                     name: profileName,
+                     slug: profileName,
+                  }
+                }
+            }
+        })
         }  catch (err) {
             return fail(400, { message: "This User Already Exists!" })
         }

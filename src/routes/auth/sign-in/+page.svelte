@@ -11,7 +11,6 @@
     <div class="w-full px-4 py-12 sm:px-6 sm:py-16 lg:w-1/2 lg:px-8 lg:py-24">
         <div class="mx-auto max-w-lg text-center">
             <h1 class="text-2xl font-bold sm:text-3xl lg:text-4xl">Sign in to your account!</h1>
-
             <p class="mt-4 text-gray-500">
                 Enter your login information to access delicious recipe recommendations and meals
             </p>
