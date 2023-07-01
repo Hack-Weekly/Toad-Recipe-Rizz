@@ -4,9 +4,11 @@ import { fail } from "@sveltejs/kit";
 import { redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
-export const load: PageServerLoad = async ({ locals }) => {
+export const load: PageServerLoad = async ({ locals, cookies }) => {
     const { session } = await locals.auth.validateUser()
-    if (session) throw redirect(302, "http://localhost:5173/feed")
+    if (session) {
+        throw redirect(302, "http://localhost:5173/feed")
+    }
 }
 
 export const actions: Actions = {
@@ -17,6 +19,7 @@ export const actions: Actions = {
           const key = auth.useKey("username", username, password)
           const session = await auth.createSession((await key).userId)
           locals.auth.setSession(session)
+          console.log(`USER ${username} LOGGED IN!`)
         } catch (err) {
             console.log(err)
             return fail(400, { message: "Invalid Credentials Or User Does Not Exists Try Again!" })
