@@ -17,7 +17,7 @@
                 {:else}
                     <p class="max-w-lg text-xl font-semibold text-gray-500 mb-14">We're sorry, but it looks like something went wrong on our end. You can try refreshing the page or visiting us again later</p>
                 {/if}
-                <a href="/" class="flex justify-center items-center gap-2 rounded-md bg-black px-5 py-3 text-md font-medium text-white w-full lg:w-1/4">
+                <a href="/" class="flex justify-center items-center gap-2 rounded-md bg-[#121212] px-5 py-3 text-md font-medium text-white w-full lg:w-1/4">
                     <span>Go home</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
