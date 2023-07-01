@@ -9,10 +9,10 @@ export const actions: Actions = {
         const { email, username, password, confirm_password } = Object.fromEntries(newCredentials) as Record<string, string>
         const picture = "Not Added"
 
-        const emailRegex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+        const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
         const usernameRegex = /^[a-zA-Z0-9_]+$/
-        const passwordRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{6}$/
-
+        let uppercase: Boolean = false
+        let number: Boolean = false
 
         if(email.length === 0) return fail(400, { message: "Email is required" })
         if(!emailRegex.test(email)) return fail(400, { message: "Email is format invalid" })
@@ -23,7 +23,21 @@ export const actions: Actions = {
 
         if (password.length === 0) return fail(400, { message: "Password is required" })
         if (password.length <= 6) return fail(400, { message: "Password must be more than 6 characters" })
-        if (!passwordRegex.test(password)) return fail(400, { message: "Password must contain at least one uppercase letter, one lowercase letter, one number and a special character" })
+        //#TODO: Add password strength checker
+        for(let i = 0; i < password.length; i++) {
+            if(password[i] === " ") return fail(400, { message: "Password cannot contain spaces" })
+
+            if (password[i] === password[i].toUpperCase()) {
+                uppercase = true;
+            }
+            if (!isNaN(parseInt(password[i]))) {
+                console.log(password[i])
+                number = true;
+            }
+        }
+        if (!uppercase) return fail(400, { message: "Password must contain at least one uppercase character" });
+        if (!number) return fail(400, { message: "Password must contain at least one number" });
+
         if (password !== confirm_password) return fail(400, { message: "Passwords do not match" })
         
 
