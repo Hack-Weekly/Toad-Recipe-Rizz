@@ -47,7 +47,7 @@ export const actions: Actions = {
         if (!number) return fail(400, { message: "Password must contain at least one number" });
 
         if (password !== confirm_password) return fail(400, { message: "Passwords do not match" })
-        
+
 
         try {
           // MD5 hash for gravatar default user picture 
@@ -65,7 +65,7 @@ export const actions: Actions = {
                   picture
               }
             })
-          
+
           const profileNameArr = email.split("")
           const profileName = profileNameArr.splice(0, profileNameArr.indexOf("@")).join("")
           // Creating Profile Model, Or Row
@@ -75,11 +75,10 @@ export const actions: Actions = {
             },
             data: {
                 Profile: {
-                  create: {
-                     id: user.id,
-                     name: profileName,
-                     slug: profileName,
-                  }
+                    create: {
+                        id: user.id,
+                        name: profileName,
+                    }
                 }
             }
         })

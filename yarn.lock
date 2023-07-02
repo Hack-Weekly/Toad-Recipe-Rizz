@@ -289,6 +289,11 @@
   resolved "https://registry.npmjs.org/@types/pug/-/pug-2.0.6.tgz"
   integrity sha512-SnHmG9wN1UVmagJOnyo/qkk0Z7gejYxOYYmaAwr5u2yFYfsupN3sg10kyzN8Hep/2zbHxCnsumxOoRIRMBwKCg==
 
+"@types/uuid4@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@types/uuid4/-/uuid4-2.0.0.tgz#40a5376b7cbfde4f905403ab0e10d32b81aff341"
+  integrity sha512-lIeYnpveYni+lqo9X10IuFI11n/3l6RjxQvlVXVcijLp/w3jj+1CGX/dRIRJVtbO5ta6xYA9Xd3QqWGwUMvvng==
+
 acorn@^8.8.2:
   version "8.9.0"
   resolved "https://registry.npmjs.org/acorn/-/acorn-8.9.0.tgz"
