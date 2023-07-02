@@ -4,7 +4,7 @@ import { fail } from "@sveltejs/kit";
 import { redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
-export const load: PageServerLoad = async ({ locals, cookies }) => {
+export const load: PageServerLoad = async ({ locals }) => {
     const { session } = await locals.auth.validateUser()
     if (session) {
         throw redirect(302, "http://localhost:5173/feed")
@@ -18,7 +18,7 @@ export const actions: Actions = {
         try {
             if(username.length === 0) return fail(400, { message: "Username is required" })
             if (password.length === 0) return fail(400, { message: "Password is required" })
-            
+
             const key = auth.useKey("username", username, password)
             const session = await auth.createSession((await key).userId)
             locals.auth.setSession(session)
