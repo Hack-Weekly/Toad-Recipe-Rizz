@@ -1,7 +1,7 @@
 import {fail, redirect} from "@sveltejs/kit";
 import {v2 as cloudinary} from 'cloudinary'
 import type {Actions, PageServerLoad} from "./$types";
-import {client} from "$lib/server/lucia";
+import {auth, client} from "$lib/server/lucia";
 
 export const load: PageServerLoad = async ({locals, params}) => {
     const {session} = await locals.auth.validateUser()
@@ -40,9 +40,40 @@ export const actions: Actions = {
 
         uploadPicture(userId, picture);
         if (username !== "") updateUsername(userId, username);
-        console.log(email)
         if (email !== "") updateEmail(userId, email);
+        if (password !== "") updatePassword(userId, password, username);
     }
+}
+
+async function updatePassword(userId: string, password: string, username: string) {
+    const valid = validatePassword(password);
+    if (valid?.status === 400) return fail(400, {message: "Password invalid"});
+
+    // TODO: update password
+}
+
+function validatePassword(password: string) {
+    let uppercase = false;
+    let number = false;
+
+    if (password.length === 0) return fail(400, {message: "Password is required"})
+    if (password.length <= 6) return fail(400, {message: "Password must be more than 6 characters"})
+
+    for (let i = 0; i < password.length; i++) {
+        if (password[i] === " ") return fail(400, {message: "Password cannot contain spaces"})
+
+        if (password[i] === password[i].toUpperCase()) {
+            uppercase = true;
+        }
+        if (!isNaN(parseInt(password[i]))) {
+            console.log(password[i])
+            number = true;
+        }
+    }
+    if (!uppercase) return fail(400, {message: "Password must contain at least one uppercase character"});
+    if (!number) return fail(400, {message: "Password must contain at least one number"});
+
+    // if (password !== confirm_password) return fail(400, { message: "Passwords do not match" })
 }
 
 async function updateEmail(userId: string, email: string) {
@@ -62,13 +93,23 @@ async function updateEmail(userId: string, email: string) {
 function validateEmail(email: string) {
     const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
 
-    if(email.length === 0) return fail(400, { message: "Email is required" })
-    if(!emailRegex.test(email)) return fail(400, { message: "Email is format invalid" })
+    if (email.length === 0) return fail(400, {message: "Email is required"})
+    if (!emailRegex.test(email)) return fail(400, {message: "Email is format invalid"})
 }
 
 async function updateUsername(userId: string, username: string) {
     const valid = validateUsername(username);
     if (valid?.status === 400) return fail(400, {message: "Username invalid"});
+
+    const isThereAlreadyAUsernameLikeTheOneTheUserJustTypedIn = await client.authUser.findUnique({
+        where: {
+            username: username
+        },
+        select: {
+            username: true
+        },
+    })
+    if (isThereAlreadyAUsernameLikeTheOneTheUserJustTypedIn === null) return fail(400, {message: "Username in use"});
 
     const updatedUsername = await client.authUser.update({
         where: {
