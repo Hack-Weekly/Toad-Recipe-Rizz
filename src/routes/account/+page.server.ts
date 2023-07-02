@@ -53,27 +53,28 @@ export const actions: Actions = {
         };
 
         const arrayBuffer = await picture.arrayBuffer();
-        const buffer = Buffer.from(arrayBuffer) 
+        const buffer = Buffer.from(arrayBuffer)
 
         const upload = await cloudinary.uploader.upload_stream({
             resource_type: "image",
             folder: "accounts",
             public_id: session.userId,
             overwrite: true,
+        }, async (err, result) => {
+            const storePictureUrl = await client.authUser.update({
+                where: {
+                    id: session.userId
+                },
+                data: {
+                    picture: result?.secure_url
+                }
+            })
         }).end(buffer)
+        // this is unreadable code, i have no idea how to make it more readable
 
-        const picUrl = import.meta.env.VITE_CLOUDINARY_RETREIVE_IMG_URL + session.userId
-
-        const storePictureUrl = await client.authUser.update({
-            where: {
-                id: session.userId
-            },
-            data: {
-                picture: picUrl
-            }
-        })
-
-        console.log(picUrl);
-        console.log(storePictureUrl)
+        // console.log(picUrl);
+        // console.log(storePictureUrl)
     }
 }
+
+
