@@ -18,7 +18,7 @@ export const actions: Actions = {
         try {
             if(username.length === 0) return fail(400, { message: "Username is required" })
             if (password.length === 0) return fail(400, { message: "Password is required" })
-            
+
             const key = auth.useKey("username", username, password)
             const session = await auth.createSession((await key).userId)
             locals.auth.setSession(session)

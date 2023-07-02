@@ -3,6 +3,7 @@
     // So to my understanding the password in input will be stored not in a password row but directly within the lucia key, just a fyi i guess.
     import { enhance } from "$app/forms";
     import type { ActionData } from "./$types";
+    import { goto } from "$app/navigation";
     export let form: ActionData
 </script>
 <svelte:head>

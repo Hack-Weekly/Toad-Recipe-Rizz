@@ -1,45 +1,41 @@
-import { redirect, fail } from "@sveltejs/kit"
+import { error, fail } from "@sveltejs/kit"
 import type { PageServerLoad, Actions } from "./$types"
 import { client } from "$lib/server/lucia"
-/* Possible Spaghetti That Fuffils Its Purpose, Written With Much Love By: Bionic <3 */
+/* Possible Spaghetti That Fulffils Its Purpose, Written With Much Love By: Bionic <3 */
 
-export const load: PageServerLoad = async ({ locals, params }) => {
-    const { session } = await locals.auth.validateUser()
+export const load: PageServerLoad = async ({ params }) => {
+    try {
+        console.log(params.slug)
+        const getUserProfile = await client.profile.findFirst({
+            where: {
+                slug: params.slug
+            },
+            select: {
+                name: true,
+                slug: true,
+                id: true,
+            }
+        })
 
-    if (session) {
-        const getUserProfile = await client.profile.findUnique({
-        where: {
-            id: session.userId,
-        },
-        select: {
-            name: true,
-            slug: true,
-            id: true,
-        }
-      })
-
-    const getUserInfo = await client.authUser.findUnique({
-        where: {
-            id: session.userId,
-        },
-        select: {
-            username: true,
-            picture: true,
-        }
-    })
-
-    // If profile with slug is equal to the param slug then return profile values.
-    console.log(getUserInfo, getUserProfile)
-    if (getUserProfile?.slug === params.slug) {
-        return {
-            name: getUserProfile.name,
-            username: getUserInfo?.username,
-            userPicture: getUserInfo?.picture
-        }
-    } else {
-    throw redirect(308, `http://localhost:5173/profile/${getUserProfile?.slug}`) // http code 308 makes sense I think, but change if not.
+        const getUserInfo = await client.authUser.findUnique({
+            where: {
+                id: getUserProfile?.id,
+            },
+            select: {
+                username: true,
+                picture: true,
+            }
+        })
+            return {
+                name: getUserProfile?.name,
+                username: getUserInfo?.username,
+                userPicture: getUserInfo?.picture
+            }
+    } catch (err) {
+        console.log(err)
+        throw error(404, { message: "Not Found" })
     }
-  } else throw redirect(302, "http://localhost:5173/auth/sign-up") // redirect user to sign-up if user tries to view profile
+
 }
 
 /* TODO MAYBE ADD DEFAULT VALUES IF THE LENGTH OF THE ROWS IM TRYING TO UPDATA ARE 0 OR EMPTY */

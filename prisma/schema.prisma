@@ -12,9 +12,9 @@ datasource db {
 }
 
 model AuthUser {
-  id           String        @id @unique
+  id           String        @id
   email String @unique
-  username     String        @unique
+  username     String
   auth_session AuthSession[]
   auth_key     AuthKey[]
   picture String
@@ -24,6 +24,7 @@ model AuthUser {
   Recipe    	Recipe[]
   User_Category User_Category[]
   @@map("auth_user")
+  @@unique([id, username])
 }
 
 model AuthSession {
@@ -51,18 +52,19 @@ model Profile {
   id         String     @id @unique
   user_id    String
   name       String
-  slug       String
+  slug       String 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  user      AuthUser @relation(references: [id], fields: [user_id])
-  @@index([user_id])
+  user      AuthUser @relation(references: [id, username], fields: [user_id, slug], onDelete: Cascade)
+  @@index([user_id, slug])
 }
 
 model Recipe {
-  id              String             @id @unique()
-  user_id         String
+  id String @id
+  user_id String
+  recipe_id String @unique
   name            String
-  slug            String
+  slug            String @unique
   description     String
   ingredients     Json
   instructions    Json
@@ -72,7 +74,6 @@ model Recipe {
   updated_at      DateTime          @updatedAt
   user            AuthUser @relation(references: [id], fields: [user_id])
   Recipe_Category Recipe_Category[]
-
   @@index([user_id])
 }
 
@@ -102,7 +103,7 @@ model Recipe_Category {
   id          String      @id @unique
   recipe_id   String
   category_id String
-  recipe      Recipe   @relation(fields: [recipe_id], references: [id])
+  recipe      Recipe   @relation(references: [recipe_id], fields: [id])
   category    Category @relation(fields: [category_id], references: [id])
 
   @@index([recipe_id])
