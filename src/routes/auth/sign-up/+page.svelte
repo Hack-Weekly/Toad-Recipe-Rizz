@@ -9,7 +9,7 @@
 <svelte:head>
     <title>Sign up</title>
 </svelte:head>
-<section class="relative flex flex-wrap lg:h-screen lg:items-center">
+<section class="relative w-full flex flex-wrap lg:h-screen lg:items-center">
     <div class="w-full px-4 py-12 sm:px-6 sm:py-16 lg:w-1/2 lg:px-8 lg:py-24">
         <div class="mx-auto max-w-lg text-center">
             <h1 class="text-2xl font-bold sm:text-3xl lg:text-4xl">Sign up to create an account!</h1>
@@ -93,12 +93,18 @@
             </div>
 
             <div class="flex items-center justify-between">
-                <p class="text-sm text-gray-600">
-                    Already have an account?
-                    <a class="underline text-blue-500" href="/auth/sign-in">Sign in</a>
-                </p>
+                <div class="flex flex-col gap-y-1">
+                    <p class="text-sm text-gray-600">
+                        Already have an account?
+                        <a class="underline text-blue-500" href="/auth/sign-in">Sign in</a>
+                    </p>
+                    <p class="text-sm text-gray-600">
+                        Back to home page?
+                        <a class="underline text-blue-500" href="/">click here</a>
+                    </p>
+                </div>
 
-                <button type="submit" class="flex items-center gap-2 rounded-md bg-black px-5 py-3 text-sm font-medium text-white">
+                <button type="submit" class="flex items-center gap-2 rounded-md bg-[#121212] px-5 py-3 text-sm font-medium text-white">
                     <span>Sign in</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>

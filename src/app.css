@@ -1,18 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@300;400;500&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 * {
-    color: #121212;
+    /* color: #121212; */
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
+body {
+  font-family: 'Merriweather Sans', sans-serif;
+}
+
 *::-webkit-scrollbar {
-    display: none;
-  }
-  
-  /* Hide scrollbar for IE, Edge and Firefox */
-  * {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-  }
+  width: 4px;
+  min-width: 4px;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: #e4e4e4;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #121212;
+}

@@ -7,7 +7,7 @@
     <div class="w-full h-full flex-col flex gap-y-3 justify-start items-start">
 
         <div class="w-full flex justify-between">
-            <h1 class="recipe-title text-2xl"> Pineapple Ham Pizza </h1>
+            <h1 class="recipe-title font-medium text-2xl"> Pineapple Ham Pizza </h1>
             <div class="flex justify-center items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
@@ -47,11 +47,26 @@
             </span>
         </div>
 
-        <div class="description flex justify-start text-xs flex-col">
-            Pineapple ham pizza, sometimes referred to as Hawaiian pizza, was reportedly named after a brand of canned fruit, Hawaiian Pineapple Company. Sam Panopoulos, a Greek immigrant in Canada, used that fruit to create the ambrosial combination in 1962. But here, skipping canned pineapple in favor of fresh fruit and using cubed ham, ideally leftovers from a bone-in roast, means juicier meat and more vibrantly flavored pineapple.
-            <span class="text-[#175BCC] mt-2"> Read More... </span>
+        <div class="description flex justify-start text-sm flex-col">
+            Pineapple ham pizza, sometimes referred to as Hawaiian pizza, was reportedly named after a brand of canned fruit, Hawaiian Pineapple Company. Sam Panopoulos, a greek immigrant in Canada, used that fruit to create the ambrosial combination in 1962. But here, skipping canned pineapple in favor of fresh fruit and using cubed ham, ideally leftovers from a bone-in roast, means juicier meat and more vibrantly flavored pineapple.
+            <a href="/" class="flex items-center mt-2 arrow">
+                <a href="/recipe/view/pineapple-ham-pizza"> <span class="text-[#175BCC] underline"> View recipe</span> </a> 
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#175BCC] mt-0.5" viewBox="0 0 24 24" stroke-width="1.5" stroke="#175BCC" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M9 6l6 6l-6 6" />
+                </svg>
+            </a>
         </div>
 
     </div>
 
 </div>
+<style>
+.arrow svg {
+    transition: transform 0.3s ease-in-out;
+}
+        
+.arrow:hover svg {
+    transform: translateX(5px);
+}
+</style>
