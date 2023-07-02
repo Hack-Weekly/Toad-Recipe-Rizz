@@ -1,3 +1,9 @@
+<script>
+
+    import { page } from '$app/stores'; 
+
+</script>
+
 <!-- navbar start here -->
 <section class="navbar w-96 min-w-[384px] max-lg:w-72 max-lg:min-w-[288px] max-sm:w-16 max-sm:min-w-[64px] h-full border-r flex justify-center items-start pt-6">
 
@@ -36,6 +42,7 @@
             </a>
             <a href="/communities" class="max-sm:hidden"> communities </a>
         </li>
+        {#if $page.data}
         <li class="w-full h-11 max-sm:w-11 flex justify-start max-sm:justify-center items-center max-sm:pl-0 pl-2 gap-x-4 transition-all duration-300 hover:bg-gray-100 ease-in-out rounded-md">
             <a href="/auth/sign-up" class="">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -44,6 +51,16 @@
             </a>
             <a href="/auth/sign-up" class="max-sm:hidden"> Sign Up </a>
         </li>
+        { :else }
+        <li class="w-full h-11 max-sm:w-11 flex justify-start max-sm:justify-center items-center max-sm:pl-0 pl-2 gap-x-4 transition-all duration-300 hover:bg-gray-100 ease-in-out rounded-md">
+            <a href="/auth/sign-up" class="">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                </svg>                 
+            </a>
+            <a href="/auth/logout" class="max-sm:hidden"> Logout </a>
+        </li>
+        { /if }
         <li class="w-full h-11 flex justify-start items-center mt-2 max-sm:w-11">
             <a href="/account" class="w-full h-full">
                 <button class="w-full h-full bg-[#121212] text-white rounded-md text-center">
