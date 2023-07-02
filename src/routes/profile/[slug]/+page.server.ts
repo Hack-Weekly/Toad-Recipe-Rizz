@@ -3,7 +3,7 @@ import type { PageServerLoad, Actions } from "./$types"
 import { client } from "$lib/server/lucia"
 /* Possible Spaghetti That Fulffils Its Purpose, Written With Much Love By: Bionic <3 */
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ params, parent }) => {
     try {
         console.log(params.slug)
         const getUserProfile = await client.profile.findFirst({
@@ -26,10 +26,35 @@ export const load: PageServerLoad = async ({ params }) => {
                 picture: true,
             }
         })
+
+        const userRecipes = await client.recipe.findMany({
+            where: {
+                user_id: getUserProfile?.id
+            },
+            select: {
+                name: true,
+                slug: true,
+                created_at: true,
+                updated_at: true,
+            }
+        })
+
+        if (getUserProfile?.id ===(await parent()).userId) {
             return {
+                isUser: true,
                 name: getUserProfile?.name,
                 username: getUserInfo?.username,
-                userPicture: getUserInfo?.picture
+                userPicture: getUserInfo?.picture,
+                userRecipes
+            }
+        }
+
+         return {
+            isUser: false,
+            name: getUserProfile?.name,
+            username: getUserInfo?.username,
+            userPicture: getUserInfo?.picture,
+            userRecipes
             }
     } catch (err) {
         console.log(err)

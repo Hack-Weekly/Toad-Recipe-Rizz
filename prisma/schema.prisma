@@ -49,7 +49,7 @@ model AuthKey {
 }
 
 model Profile {
-  id         String     @id @unique
+  id         String     @id @default(cuid())
   user_id    String
   name       String
   slug       String 
@@ -60,9 +60,9 @@ model Profile {
 }
 
 model Recipe {
-  id String @id
+  // Added an automatically generated id
+  id String @id @default(cuid())
   user_id String
-  recipe_id String @unique
   name            String
   slug            String @unique
   description     String
@@ -72,7 +72,7 @@ model Recipe {
   picture         String
   created_at      DateTime          @default(now())
   updated_at      DateTime          @updatedAt
-  user            AuthUser @relation(references: [id], fields: [user_id])
+  user            AuthUser @relation(references: [id], fields: [user_id], onDelete: Cascade)
   Recipe_Category Recipe_Category[]
   @@index([user_id])
 }
@@ -103,7 +103,7 @@ model Recipe_Category {
   id          String      @id @unique
   recipe_id   String
   category_id String
-  recipe      Recipe   @relation(references: [recipe_id], fields: [id])
+  recipe      Recipe   @relation(references: [id], fields: [id])
   category    Category @relation(fields: [category_id], references: [id])
 
   @@index([recipe_id])

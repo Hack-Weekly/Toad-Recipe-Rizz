@@ -1,6 +1,5 @@
 import type { Actions } from "./$types";
 import { client } from "$lib/server/lucia";
-import uuid4 from "uuid4";
 // Wrap Inner Logic In Try/Catch Later.
 export const actions: Actions = {
     default: async ({ request, locals }) => {
@@ -22,18 +21,13 @@ export const actions: Actions = {
         }
         const recipeSlug = recipeNameSlug.join("").trim()
         console.log(recipeSlug)
-        const uuid = uuid4()
-        // Prisma auto uuid isnt working after the first value it repeats the same value again on insert
-        // To get around this issue I will download the uuid4 yarn package to simplify things.
-        const createRecipe = await client.authUser.update({
+           const createRecipe = await client.authUser.update({
             where: {
                 id: session?.userId,
             },
             data: {
                 Recipe: {
                     create: {
-                        id: session?.userId,
-                        recipe_id: uuid,
                         name: recipeName,
                         description: description,
                         ingredients: { ingredient: "1", },
@@ -41,9 +35,9 @@ export const actions: Actions = {
                         cook_time: cookTime,
                         picture: picture,
                         slug: recipeSlug,
-                        }
-                    }
-                }
+                        },
+                    },
+                },
             })
 
             console.log(`${recipeName} Created!`)
