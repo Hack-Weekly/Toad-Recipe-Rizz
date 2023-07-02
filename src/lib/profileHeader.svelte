@@ -4,7 +4,7 @@
 
 </script>
 
-{#if $page.data}
+{#if $page.data.username}
     <div class="account-info min-h-[64px] w-full border-b border-gray-300 h-16 flex justify-between items-center px-4">
         <div class="left-side flex justify-start items-center gap-x-2 text-xs">
             <img src="https://i.ibb.co/5Gx5mc7/338178321-880290966603246-34525312457264604-n.jpg" alt="account-pfp" class="w-11 h-11 rounded-full">
