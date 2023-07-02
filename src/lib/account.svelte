@@ -1,13 +1,15 @@
-<script>
+<script lang="ts">
+    import { enhance } from "$app/forms";
     let passwordHidden = true;
-  
+    let avatar = "https://i.ibb.co/5Gx5mc7/338178321-880290966603246-34525312457264604-n.jpg"
+    
     function togglePassword() {
       passwordHidden = !passwordHidden;
     }
   </script>
   
 <div class="profile-container px-4 h-full">
-
+  <form method="POST" use:enhance>
     <!-- <div class="profile-label mt-4 px-4 py-2">
         <p class="text-black text-xl w-160 h-50">Profile</p>
     </div> -->
@@ -15,23 +17,22 @@
     <div class="flex flex-row justify-center mt-4 gap-x-4">
         
         <div class="">
-            <div class="bg-[#175BCC] rounded-full w-32 h-32 flex items-center justify-center">
-              <span class="text-white text-xl">Profile Pic</span>
+            <div class="flex items-center justify-center">
+
+              <img src="{avatar}" alt="" class="w-32 h-32 rounded-full" />
             </div>
         </div>
 
         <div class="flex justify-center items-start flex-col gap-y-2">
-
           <div class="">
                 <div class="border-2 border-dashed rounded-lg p-8 bg-[#F3F3F3]">
                   <p class="text-lg text-gray-600 mb-4">Drop photo here to upload</p>
                   <label for="file-input" class="bg-gray-100 border max-sm:py-0.5 max-sm:px-1 border-black/10 text-black py-1 px-2 rounded">
                     Browse files
                   </label>
-                  <input id="file-input" type="file" class="hidden" />                  
+                  <input id="file-input" name="picture" type="file" class="hidden" />                  
                 </div>
             </div>
-    
             <div class="flex justify-center">
                 <button class="bg-[#FFE1DE] text-white py-1 px-6 rounded-md border border-red-300">
                     <p class="text-red-700">Delete</p>
@@ -84,9 +85,9 @@
       </div>
 
     <div class="w-full h-11 flex justify-start items-center mt-4">
-        <button class="w-full h-full bg-[#121212] text-white rounded-md text-center">
+        <button type="submit" class="w-full h-full bg-[#121212] text-white rounded-md text-center">
             <p class="text-white"> Save </p>
         </button>
     </div>
-
+  </form>
 </div>
