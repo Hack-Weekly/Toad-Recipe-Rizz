@@ -3,6 +3,8 @@
     // @ts-ignore
     import ShortRecipe from '$lib/shortRecipe.svelte';
     import ProfileHeader from '$lib/profileHeader.svelte';
+	import Account from '$lib/account.svelte';
+	import AddRecipe from '$lib/addRecipe.svelte';
 
 </script>  
 
@@ -10,10 +12,12 @@
 
     <ProfileHeader />
 
-    
+    <!-- <Account /> -->
+    <AddRecipe />
+
     <div class="overflow-y-auto mb-6">
-        <ShortRecipe  />
-        <Communities  />
+        <!-- <ShortRecipe  /> -->
+        <!-- <Communities  /> -->
     </div>
 
     <div class="search w-full p-4 border-t border-gray-300 hidden max-xl:block">
