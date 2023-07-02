@@ -3,12 +3,13 @@
     // So to my understanding the password in input will be stored not in a password row but directly within the lucia key, just a fyi i guess.
     import { enhance } from "$app/forms";
     import type { ActionData } from "./$types";
+    import { goto } from "$app/navigation";
     export let form: ActionData
 </script>
 <svelte:head>
     <title>Sign up</title>
 </svelte:head>
-<section class="relative flex flex-wrap lg:h-screen lg:items-center">
+<section class="relative w-full flex flex-wrap lg:h-screen lg:items-center">
     <div class="w-full px-4 py-12 sm:px-6 sm:py-16 lg:w-1/2 lg:px-8 lg:py-24">
         <div class="mx-auto max-w-lg text-center">
             <h1 class="text-2xl font-bold sm:text-3xl lg:text-4xl">Sign up to create an account!</h1>
@@ -92,10 +93,16 @@
             </div>
 
             <div class="flex items-center justify-between">
-                <p class="text-sm text-gray-600">
-                    Already have an account?
-                    <a class="underline text-blue-500" href="/auth/sign-in">Sign in</a>
-                </p>
+                <div class="flex flex-col gap-y-1">
+                    <p class="text-sm text-gray-600">
+                        Already have an account?
+                        <a class="underline text-blue-500" href="/auth/sign-in">Sign in</a>
+                    </p>
+                    <p class="text-sm text-gray-600">
+                        Back to home page?
+                        <a class="underline text-blue-500" href="/">click here</a>
+                    </p>
+                </div>
 
                 <button type="submit" class="flex items-center gap-2 rounded-md bg-[#121212] px-5 py-3 text-sm font-medium text-white">
                     <span>Sign in</span>

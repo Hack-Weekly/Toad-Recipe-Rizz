@@ -47,7 +47,7 @@
             </span>
         </div>
 
-        <div class="description flex justify-start text-xs flex-col">
+        <div class="description flex justify-start text-sm flex-col">
             Pineapple ham pizza, sometimes referred to as Hawaiian pizza, was reportedly named after a brand of canned fruit, Hawaiian Pineapple Company. Sam Panopoulos, a Greek immigrant in Canada, used that fruit to create the ambrosial combination in 1962. But here, skipping canned pineapple in favor of fresh fruit and using cubed ham, ideally leftovers from a bone-in roast, means juicier meat and more vibrantly flavored pineapple.
         </div>
 
@@ -55,7 +55,7 @@
             <p class="text-xs text-[#175BCC]"> Instructions </p>
         </span>
 
-        <div class="instructions flex justify-start text-xs flex-col">
+        <div class="instructions flex justify-start text-sm flex-col">
             Position a rack in the oven nearest to the heat source, on the highest or lowest spot depending on your model. Heat the oven to 450 degrees. Grease the center of a large sheet pan with 1 tablespoon olive oil.
             Flatten the dough in between your hands, then rotate the round in your hands like a wheel and pull it outwards to stretch into a 12-inch circle. Place the dough on the sheet pan. Evenly spread the tomato sauce over the dough, leaving a 1/4-inch border. Sprinkle with mozzarella, then top with ham and pineapple.
         </div>
@@ -64,7 +64,7 @@
             <p class="text-xs text-[#175BCC]"> Ingredients </p>
         </span>
 
-        <div class="instructions flex justify-start text-xs flex-col">
+        <div class="instructions flex justify-start text-sm flex-col">
             ・Olive oil <br>
             ・1 (8- to 10-ounce) ball store-bought pizza dough, room temperature <br>
             ・1/2 cup Marcella Hazan’s tomato sauce or other pizza sauce <br>
