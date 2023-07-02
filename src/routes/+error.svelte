@@ -3,7 +3,7 @@
     import sad from '$lib/assets/sad.png';
 
 </script>
-<section class="relative py-20 sm:py-32 lg:py-64 overflow-hidden">
+<section class="relative py-20 sm:py-32 lg:py-64 w-full h-full flex justify-center items-center overflow-hidden">
     <div class="relative container px-4 mx-auto">
         <div class="sm:flex items-start justify-center max-w-5xl gap-3 mx-auto">
             <img class="block mb-8 sm:mr-10 md:mr-14 h-auto w-56" src="{sad}" alt="Emoji">

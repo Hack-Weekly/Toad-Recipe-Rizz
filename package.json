@@ -26,6 +26,7 @@
 		"@types/md5": "^2.3.2",
 		"@types/uuid4": "^2.0.0",
 		"autoprefixer": "^10.4.14",
+		"cloudinary": "^1.37.3",
 		"lucia-auth": "^1.8.0",
 		"lucia-sveltekit": "^0.14.3",
 		"md5": "^2.3.0",
