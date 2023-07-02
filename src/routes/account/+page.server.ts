@@ -22,7 +22,7 @@ export const load: PageServerLoad = async ({ locals, params }) => {
 
     const defaultAvatar = "https://i.ibb.co/5Gx5mc7/338178321-880290966603246-34525312457264604-n.jpg"
     return {
-        picture: getUserProfile?.picture ?? defaultAvatar
+        userPicture: getUserProfile?.picture ?? defaultAvatar
     }
 }
 
@@ -44,7 +44,7 @@ export const actions: Actions = {
             secure: true
         });
 
-        console.log(con)
+        // console.log(con)
 
         const options = {
             use_filename: true,
