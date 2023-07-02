@@ -1,8 +1,10 @@
 <script lang="ts">
     import { enhance } from "$app/forms";
     let passwordHidden = true;
-    let avatar = "https://i.ibb.co/5Gx5mc7/338178321-880290966603246-34525312457264604-n.jpg"
-    
+    // let avatar = "https://i.ibb.co/5Gx5mc7/338178321-880290966603246-34525312457264604-n.jpg"
+
+    export let picture
+
     function togglePassword() {
       passwordHidden = !passwordHidden;
     }
@@ -19,7 +21,7 @@
         <div class="">
             <div class="flex items-center justify-center">
 
-              <img src="{avatar}" alt="" class="w-32 h-32 rounded-full" />
+              <img src="{picture}" alt="" class="w-32 h-32 rounded-full" />
             </div>
         </div>
 

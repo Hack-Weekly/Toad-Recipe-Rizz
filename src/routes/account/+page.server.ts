@@ -6,6 +6,26 @@ import type { PageServerLoad } from "./$types";
 import { writeFile } from 'fs/promises';
 import console from "console";
 
+export const load: PageServerLoad = async ({ locals, params }) => {
+    const { session } = await locals.auth.validateUser()
+
+    if (!session) throw redirect(302, "http://localhost:5173/auth/sign-up") // redirect user to sign-up if user tries to view profile
+
+    const getUserProfile = await client.authUser.findUnique({
+        where: {
+            id: session.userId,
+        },
+        select: {
+            picture: true
+        }
+    })
+
+    const defaultAvatar = "https://i.ibb.co/5Gx5mc7/338178321-880290966603246-34525312457264604-n.jpg"
+    return {
+        picture: getUserProfile?.picture ?? defaultAvatar
+    }
+}
+
 export const actions: Actions = {
     default: async ({ request, locals }) => {
         const { session } = await locals.auth.validateUser()
