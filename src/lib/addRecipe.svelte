@@ -35,13 +35,13 @@
   </script>
 
 
-<div class="profile-container px-4 pt-4 h-full">
+<div class="profile-container px-4 h-full">
 
     <!-- <div class="profile-label px-4 py-2 mt-4">
         <p class="text-black text-xl w-160 h-50">Add Recipe</p>
     </div> -->
 
-    <div class="flex flex-row justify-center mt-4 gap-x-4">
+    <div class="flex flex-row justify-center mt-4  gap-x-4">
         
         <div class="">
             <div class="bg-[#175BCC] rounded-full w-32 h-32 flex items-center justify-center">
@@ -182,7 +182,7 @@
         </datalist>
     </div>
 
-    <div class="w-full h-11 flex justify-start items-center mt-6">
+    <div class="w-full h-11 flex justify-start items-center mt-6 mb-4">
         <button class="w-full h-full bg-[#121212] text-white rounded-md text-center">
             <p class="text-white"> Save </p>
         </button>

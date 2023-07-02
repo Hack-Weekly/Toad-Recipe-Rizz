@@ -50,7 +50,7 @@
         <div class="description flex justify-start text-sm flex-col">
             Pineapple ham pizza, sometimes referred to as Hawaiian pizza, was reportedly named after a brand of canned fruit, Hawaiian Pineapple Company. Sam Panopoulos, a greek immigrant in Canada, used that fruit to create the ambrosial combination in 1962. But here, skipping canned pineapple in favor of fresh fruit and using cubed ham, ideally leftovers from a bone-in roast, means juicier meat and more vibrantly flavored pineapple.
             <a href="/" class="flex items-center mt-2 arrow">
-                <span class="text-[#175BCC]">View recipe</span>
+                <a href="/recipe/view/pineapple-ham-pizza"> <span class="text-[#175BCC] underline"> View recipe</span> </a> 
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#175BCC] mt-0.5" viewBox="0 0 24 24" stroke-width="1.5" stroke="#175BCC" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                     <path d="M9 6l6 6l-6 6" />

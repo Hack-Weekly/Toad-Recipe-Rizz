@@ -6,7 +6,7 @@
     }
   </script>
   
-<div class="profile-container px-4 pt-4 h-full">
+<div class="profile-container px-4 h-full">
 
     <!-- <div class="profile-label mt-4 px-4 py-2">
         <p class="text-black text-xl w-160 h-50">Profile</p>
@@ -25,7 +25,7 @@
           <div class="">
                 <div class="border-2 border-dashed rounded-lg p-8 bg-[#F3F3F3]">
                   <p class="text-lg text-gray-600 mb-4">Drop photo here to upload</p>
-                  <label for="file-input" class="bg-gray-100 border border-black/10 text-black py-1 px-2 rounded">
+                  <label for="file-input" class="bg-gray-100 border max-sm:py-0.5 max-sm:px-1 border-black/10 text-black py-1 px-2 rounded">
                     Browse files
                   </label>
                   <input id="file-input" type="file" class="hidden" />                  

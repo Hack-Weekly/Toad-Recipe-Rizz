@@ -1,5 +1,5 @@
 <script>
-    import Communities from '$lib/communities.svelte';
+    
     // @ts-ignore
     import ShortRecipe from '$lib/shortRecipe.svelte';
     import ProfileHeader from '$lib/profileHeader.svelte';
@@ -9,11 +9,9 @@
 <section class="center w-full h-screen relative flex justify-start items-center flex-col">
 
     <ProfileHeader />
-
     
     <div class="overflow-y-auto mb-6">
         <ShortRecipe  />
-        <Communities  />
     </div>
 
     <div class="search w-full p-4 border-t border-gray-300 hidden max-xl:block">
