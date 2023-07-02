@@ -46,19 +46,19 @@
 
     <div class="username-input w-full mt-4">
         <label for="username" class="block mb-2">Username</label>
-        <input type="text" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4" placeholder="shaniayanofc">
+        <input type="text" name="username" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4" placeholder="shaniayanofc">
     </div>
 
     <div class="email-input mt-4">
         <label for="email" class="block mb-2">Email</label>
-        <input type="text" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4" placeholder="shaniayanofc@email.com">
+        <input type="text" name="email" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4" placeholder="shaniayanofc@email.com">
     </div>
 
     <div class="password-input mt-4">
         <label for="password" class="block mb-2">Password</label>
         
         <div class="input-container relative flex justify-center items-center">
-          <input type="password" id="password" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 pl-3" placeholder="******">
+          <input type="password" name="password" id="password" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 pl-3" placeholder="******">
           <button class="absolute right-0 flex justify-center items-center mr-2" on:click={togglePassword}>
             
             {#if passwordHidden}
