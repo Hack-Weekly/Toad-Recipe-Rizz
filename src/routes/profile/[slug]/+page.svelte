@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { goto } from "$app/navigation";
     import { enhance } from "$app/forms";
     import Communities from '$lib/communities.svelte';
     import ProfileHeader from "$lib/profileHeader.svelte";
@@ -6,14 +7,13 @@
     import ShortRecipe from '$lib/shortRecipe.svelte';
     import UserProfilePageHeader from '$lib/UserProfilePageHeader.svelte';
     import { page } from '$app/stores';
+
 </script>
 
 <section class="center w-full h-screen relative flex justify-start items-center flex-col">
-
     <ProfileHeader/>
     <UserProfilePageHeader />
 
-    
     <div class="overflow-y-auto mt-24 border-t border-gray-300">
             <ShortRecipe  />
         <div>

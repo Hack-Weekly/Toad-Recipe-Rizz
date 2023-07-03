@@ -1,19 +1,29 @@
-<script>
+<script lang="ts">
+    import Recipe from '$lib/recipe.svelte';
     import Communities from '$lib/communities.svelte';
     // @ts-ignore
     import ShortRecipe from '$lib/shortRecipe.svelte';
     import ProfileHeader from '$lib/profileHeader.svelte';
+    import Profile from '$lib/profile.svelte';
+    import AddRecipe from '$lib/addRecipe.svelte';
+    import { page } from '$app/stores';
+    import Account from '$lib/account.svelte';
 
+    console.log($page.data)
 </script>  
 
 <section class="center w-full h-screen relative flex justify-start items-center flex-col">
 
+
     <ProfileHeader />
 
-    
+
+    <!-- <Account /> -->
+    <AddRecipe />
+
     <div class="overflow-y-auto mb-6">
-        <ShortRecipe  />
-        <Communities  />
+        <!-- <ShortRecipe  /> -->
+        <!-- <Communities  /> -->
     </div>
 
     <div class="search w-full p-4 border-t border-gray-300 hidden max-xl:block">
@@ -39,3 +49,5 @@
     </div>
 
 </section>
+
+<a href="/auth/delete" class="border-8">Delete</a>

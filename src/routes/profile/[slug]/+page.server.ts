@@ -1,10 +1,22 @@
-import { redirect, fail } from "@sveltejs/kit"
+import { error, fail } from "@sveltejs/kit"
 import type { PageServerLoad, Actions } from "./$types"
 import { client } from "$lib/server/lucia"
-/* Possible Spaghetti That Fuffils Its Purpose, Written With Much Love By: Bionic <3 */
+/* Possible Spaghetti That Fulffils Its Purpose, Written With Much Love By: Bionic <3 */
 
-export const load: PageServerLoad = async ({ locals, params }) => {
-    const { session } = await locals.auth.validateUser()
+export const load: PageServerLoad = async ({ params, parent }) => {
+    try {
+        console.log(params.slug)
+        const getUserProfile = await client.profile.findFirst({
+            where: {
+                slug: params.slug
+            },
+            select: {
+                name: true,
+                slug: true,
+                id: true,
+            }
+        })
+
 
     if (session) {
         const getUserProfile = await client.profile.findUnique({
@@ -19,15 +31,38 @@ export const load: PageServerLoad = async ({ locals, params }) => {
         }
       })
 
-    const getUserInfo = await client.authUser.findUnique({
-        where: {
-            id: session.userId,
-        },
-        select: {
-            username: true,
-            picture: true,
+        const getUserInfo = await client.authUser.findUnique({
+            where: {
+                id: getUserProfile?.id,
+            },
+            select: {
+                username: true,
+                picture: true,
+            }
+        })
+
+        const userRecipes = await client.recipe.findMany({
+            where: {
+                user_id: getUserProfile?.id
+            },
+            select: {
+                name: true,
+                slug: true,
+                created_at: true,
+                updated_at: true,
+            }
+        })
+
+        if (getUserProfile?.id ===(await parent()).userId) {
+            return {
+                isUser: true,
+                name: getUserProfile?.name,
+                username: getUserInfo?.username,
+                userPicture: getUserInfo?.picture,
+                userRecipes
+            }
         }
-    })
+
 
     const getJoinedCategories = await client.user_Category.findMany({
         where: {
@@ -62,13 +97,24 @@ export const load: PageServerLoad = async ({ locals, params }) => {
                 username: getUserInfo?.username,
                 userPicture: getUserInfo?.picture,
                 created_at: getUserProfile.created_at
+                userRecipes
             },
             categories: categories
         }
     } else {
     throw redirect(308, `http://localhost:5173/profile/${getUserProfile?.slug}`) // http code 308 makes sense I think, but change if not.
+         return {
+            isUser: false,
+            name: getUserProfile?.name,
+            username: getUserInfo?.username,
+            userPicture: getUserInfo?.picture,
+            userRecipes
+            }
+    } catch (err) {
+        console.log(err)
+        throw error(404, { message: "Not Found" })
     }
-  } else throw redirect(302, "http://localhost:5173/auth/sign-up") // redirect user to sign-up if user tries to view profile
+
 }
 
 /* TODO MAYBE ADD DEFAULT VALUES IF THE LENGTH OF THE ROWS IM TRYING TO UPDATA ARE 0 OR EMPTY */
