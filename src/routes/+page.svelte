@@ -7,15 +7,16 @@
     import { onMount } from 'svelte';
 
     let recipes = [];
-
-  onMount(async () => {
+    export let data
+    // WTF IS THIS??
+ /* onMount(async () => {
         // use the proxy endpoint
         const response = await fetch('/recipes');
         recipes = await response.json();
         console.log(recipes)
-    });
+    }); */
 
-    console.log($page.data)
+    console.log(data)
 </script>  
 
 <section class="center w-full h-screen relative flex justify-start items-center flex-col">

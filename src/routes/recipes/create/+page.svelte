@@ -1,10 +1,10 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
     import defaultPic from '$lib/assets/defaultPic.png';
-    import {enhance} from '$app/forms';
-	
-	let profilePic = defaultPic;
-
+    import { enhance } from '$app/forms';
+	  let profilePic = defaultPic;
+    export let data;
+    console.log(data)
 	// @ts-ignore
 	function handleFileInputChange(event) {
 		const file = event.target.files[0];
@@ -24,21 +24,11 @@
 
 
 	let categorySearchQuery = '';
-  	let ingredientSearchQuery = '';
+ 	let ingredientSearchQuery = '';
 	let selectedCategories: any[] = [];
 	let selectedIngredients: any[] = [];
 
-	let categoryOptions = [
-		'Option 1',
-		'Option 21212312312312 oPdjakfakjf012sdafkla23rklaweslkdpoe3wfrfdoik0-21',
-		'Option 3',
-		'Option 4',
-		'Option 5',
-		'Italian',
-		'Vegetarian',
-		'Seafood'
-	];
-
+	let categoryOptions = data.categories
 	const dispatch = createEventDispatcher();
 
 	// @ts-ignore
@@ -93,7 +83,8 @@
 		if (selectedValue && !selectedIngredients.includes(selectedValue)) {
 		selectIngredientOption(selectedValue);
 		}
-	}
+  }
+
 
   </script>
 
@@ -178,7 +169,6 @@
 				bind:value={ingredientSearchQuery} 
 				on:input={handleIngredientInputChange} 
         on:change={handleIngredientSelection} 
-        name="ingredients"
 				placeholder="Enter Ingredients..." />
 		
 		<div class="flex justify-center items-start flex-col gap-y-2">
@@ -194,7 +184,9 @@
 				</button>
 			  </div>
 			{/each}
-		</div>
+    </div>
+    <!-- I KNOW ITS FUCKING SCUFFED BRO --->
+    <textarea name="ingredients" value={selectedIngredients} class="hidden"></textarea>
 	
 		<!-- {#if ingredientSearchQuery && !selectedIngredients.includes(ingredientSearchQuery)}
 			<div>
@@ -211,19 +203,20 @@
 				bind:value={categorySearchQuery} 
 				on:input={handleCategoryInputChange} 
         on:change={handleCategorySelection} 
-        name="categories"
 				placeholder="Search Categories..." 
 				list="category-options" />
 
 	  
 		<datalist id="category-options">
-			{#each categoryOptions as option}
-				{#if option.toLowerCase().includes(categorySearchQuery.toLowerCase())}
-				<option value={option} />
+        {#each categoryOptions as { name }}
+				{#if name.toLowerCase().includes(categorySearchQuery.toLowerCase())}
+				<option value={name} />
 				{/if}
 			{/each}
-		</datalist>
-		
+    </datalist>
+
+    <textarea value={selectedCategories} name="categories" class="hidden"/>
+
 		<div class="flex justify-center items-start flex-col gap-y-2">
 			{#each selectedCategories as option}
 			<div class="bg-blue-100 rounded-md p-2">
