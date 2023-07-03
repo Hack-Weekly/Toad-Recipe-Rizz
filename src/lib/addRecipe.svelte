@@ -62,8 +62,8 @@
 	// @ts-ignore
 	function handleCategorySelection(event) {
 		const selectedValue = event.target.value;
-		if (selectedValue && !selectedCategories.includes(selectedValue)) {
-		selectCategoryOption(selectedValue);
+		if (selectedValue && !selectedCategories.includes(selectedValue) && categoryOptions.includes(selectedValue)) {
+			selectCategoryOption(selectedValue);
 		}
 	}
 
@@ -97,7 +97,7 @@
   </script>
 
 
-<div class="profile-container px-4 h-full">
+<div class="profile-container px-4 overflow-y-auto h-screen">
 
     <!-- <div class="profile-label px-4 py-2 mt-4">
         <p class="text-black text-xl w-160 h-50">Add Recipe</p>
@@ -107,7 +107,7 @@
         
         <div class="">
             <div class="bg-[#175BCC] rounded-full w-32 h-32 flex items-center justify-center">
-				<img src={profilePic} alt="Profile Pic" class="rounded-full w-full h-full" />
+				<img src={profilePic} alt="Profile Pic" class="rounded-full w-full h-full object-cover" />
             </div>
         </div>
 
@@ -181,33 +181,38 @@
 				on:change={handleIngredientSelection} 
 				placeholder="Enter Ingredients..." />
 		
-		<div class="flex justify-center items-start flex-col gap-y-2">
+		<div class="flex justify-start items-center flex-wrap w-[435px] pt-2 gap-y-2 gap-x-2">
 			{#each selectedIngredients as option}
-			<div class="bg-blue-100 rounded-md p-2">
-				<span>{option}</span>
-				<button class="ml-2 text-red-500 hover:text-red-700" on:click={() => removeIngredientOption(option)}>
-					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-rounded-minus" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff2825" fill="none" stroke-linecap="round" stroke-linejoin="round">
-						<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-						<path d="M9 12h6" />
-						<path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
+			<div class="border-black/10 border bg-gray-100 max-w-[435px] w-fit rounded-md py-2 px-4 flex justify-start items-center">
+				<p class="">{option}</p>
+				<button class="ml-2 text-red-400 hover:text-red-500" on:click={() => removeIngredientOption(option)}>
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
 					  </svg>
 				</button>
 			  </div>
 			{/each}
 		</div>
-	
-		<!-- {#if ingredientSearchQuery && !selectedIngredients.includes(ingredientSearchQuery)}
-			<div>
-				<span>{ingredientSearchQuery}</span>
-				<button on:click={() => selectIngredientOption(ingredientSearchQuery)}>Add</button>
-			</div>
-		{/if} -->
 	</div>
 							
 							
 	<div class="categories-input mt-8">
 		<label for="categories" class="block mb-2">Categories</label>
-		<input type="text" id="categories" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4" 
+
+		<select id="categories" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4"
+			bind:value={categorySearchQuery}
+			on:change={handleCategorySelection}
+			on:click={() => categorySearchQuery = ""}
+			placeholder="Search Categories...">
+				<option value="" disabled hidden>Select a category</option>
+				{#each categoryOptions as option}
+					{#if option.toLowerCase().includes(categorySearchQuery.toLowerCase())}
+						<option value={option}>{option}</option>
+					{/if}
+				{/each}
+		</select>
+
+		<!-- <input type="text" id="categories" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4" 
 				bind:value={categorySearchQuery} 
 				on:input={handleCategoryInputChange} 
 				on:change={handleCategorySelection} 
@@ -221,29 +226,20 @@
 				<option value={option} />
 				{/if}
 			{/each}
-		</datalist>
+		</datalist> -->
 		
-		<div class="flex justify-center items-start flex-col gap-y-2">
+		<div class="flex justify-start items-center flex-wrap w-[435px] pt-2 gap-y-2 gap-x-2">
 			{#each selectedCategories as option}
-			<div class="bg-blue-100 rounded-md p-2">
-				<span>{option}</span>
-				<button class="ml-2 text-red-500 hover:text-red-700" on:click={() => removeCategoryOption(option)}>
-					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-rounded-minus" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff2825" fill="none" stroke-linecap="round" stroke-linejoin="round">
-						<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-						<path d="M9 12h6" />
-						<path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
+			<div class="border-black/10 border bg-gray-100 max-w-[435px] w-fit rounded-md py-2 px-4 flex justify-start items-center">
+				<p class="">{option}</p>
+				<button class="ml-2 text-red-400 hover:text-red-500" on:click={() => removeCategoryOption(option)}>
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
 					  </svg>
 				</button>
 			  </div>
 			{/each}
 		</div>
-	
-		<!-- {#if categorySearchQuery && !selectedOptions.includes(categorySearchQuery)}
-			<div>
-				<span>{categorySearchQuery}</span>
-				<button on:click={() => selectOption(categorySearchQuery)}>Add</button>
-			</div>
-		{/if} -->
 	</div>
 
     <div class="w-full h-11 flex justify-start items-center mt-6 mb-4">

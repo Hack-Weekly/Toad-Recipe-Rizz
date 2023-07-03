@@ -1,31 +1,53 @@
 <script lang="ts">
     // @ts-ignore
-    import ShortRecipe from '$lib/shortRecipe.svelte';
+    import Community from '$lib/community.svelte';
     import ProfileHeader from '$lib/profileHeader.svelte';
     import { page } from '$app/stores';
     import { enhance } from '$app/forms';
-    import { onMount } from 'svelte';
-
-    let recipes = [];
-
-  onMount(async () => {
-        // use the proxy endpoint
-        const response = await fetch('/recipes');
-        recipes = await response.json();
-        console.log(recipes)
-    });
 
     console.log($page.data)
 </script>  
 
-<section class="center w-full h-screen relative flex justify-start items-center flex-col">
+<section class="center w-full h-screen relative overflow-y-auto flex justify-start items-center flex-col">
 
 
     <ProfileHeader />
+
+    <div class="min-h-[64px] w-full border-b border-gray-300 h-16 flex justify-between items-center px-4">
+        <div class="flex justify-start items-center gap-x-2 text-xs">
+            <div class="flex justify-start items-start flex-col">
+                <h1 class="text-xl font-semibold"> Followed Communities </h1>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="communities-list max-w-[725px] p-8 border-b w-full h-full flex justify-start items-center px-6 overflow-y-hidden overflow-x-auto gap-x-8 border-gray-300 min-h-[350px]">
+
     
-    <div class="overflow-y-auto mb-6">
-        <ShortRecipe  />
-        <!-- <Communities  /> -->
+        <Community />
+        <Community />
+        <Community />
+        <Community />
+
+    </div>
+
+    <div class="min-h-[64px] w-full border-b border-gray-300 h-16 flex justify-between items-center px-4">
+        <div class="flex justify-start items-center gap-x-2 text-xs">
+            <div class="flex justify-start items-start flex-col">
+                <h1 class="text-xl font-semibold"> All Categories </h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="communities-list max-w-[725px] p-8 border-b w-full flex flex-wrap justify-evenly items-center px-2 gap-x-2 gap-y-6 border-gray-300">
+
+    
+        <Community />
+        <Community />
+        <Community />
+        <Community />
+
     </div>
 
     <div class="search w-full p-4 border-t border-gray-300 hidden max-xl:block">
