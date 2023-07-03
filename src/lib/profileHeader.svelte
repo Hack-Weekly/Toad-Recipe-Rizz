@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class="right-side">
-            <a href="/recipe/create"> <button class="py-2 px-4 max-sm:text-xs rounded-md bg-[#121212] text-white"> Create Recipe </button> </a>
+            <a href="/recipe/create"> <button class="py-2 px-4 max-sm:text-[10px] rounded-md bg-[#121212] text-white"> Create Recipe </button> </a>
         </div>
     </div>
 {/if}

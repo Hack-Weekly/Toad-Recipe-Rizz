@@ -1,6 +1,7 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
     import defaultPic from '$lib/assets/defaultPic.png';
+    import {enhance} from '$app/forms';
 	
 	let profilePic = defaultPic;
 
@@ -62,8 +63,8 @@
 	// @ts-ignore
 	function handleCategorySelection(event) {
 		const selectedValue = event.target.value;
-		if (selectedValue && !selectedCategories.includes(selectedValue) && categoryOptions.includes(selectedValue)) {
-			selectCategoryOption(selectedValue);
+		if (selectedValue && !selectedCategories.includes(selectedValue)) {
+		selectCategoryOption(selectedValue);
 		}
 	}
 
@@ -97,12 +98,12 @@
   </script>
 
 
-<div class="profile-container px-4 overflow-y-auto h-screen">
+<div class="profile-container px-4 h-full">
 
     <!-- <div class="profile-label px-4 py-2 mt-4">
         <p class="text-black text-xl w-160 h-50">Add Recipe</p>
     </div> -->
-
+    <form method="POST" use:enhance>
     <div class="flex flex-row justify-center mt-4  gap-x-4">
         
         <div class="">
@@ -110,32 +111,30 @@
 				<img src={profilePic} alt="Profile Pic" class="rounded-full w-full h-full object-cover" />
             </div>
         </div>
-
         <div class="flex justify-center items-start flex-col gap-y-2">
-
+    
           <div class="">
                 <div class="border-2 border-dashed rounded-lg p-8 bg-[#F3F3F3]">
                   <p class="text-lg text-gray-600 mb-4">Drop photo here to upload</p>
                   <label for="file-input" class="bg-gray-100 border border-black/10 text-black py-1 px-2 rounded">
                     Browse files
                   </label>
-                  <input id="file-input" type="file" class="hidden" on:change={handleFileInputChange} />            
+                  <input id="file-input" type="file" name="recipeThumbnail" class="hidden" on:change={handleFileInputChange} />            
                 </div>
             </div>
     
             <div class="flex justify-center">
                 <button class="bg-[#FFE1DE] text-white py-1 px-6 rounded-md border border-red-300">
-                    <p class="text-red-700">Delete</p>
+                    Delete
                 </button>
             </div>
 
         </div>
 
     </div>
-
     <div class="recipe-name-input mt-4">
         <label for="recipe-name" class="block mb-2">Name</label>
-        <input type="text" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4" placeholder="Pineapple Ham Pizza">
+        <input type="text" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4" name="recipeName" placeholder="Pineapple Ham Pizza">
     </div>
 
     <div class="description-input mt-4">
@@ -149,13 +148,13 @@
           </div> -->
         </div>
         <div class="relative">
-          <textarea id="description" class="w-full h-75 resize-none rounded-md border outline-none border-black/10 bg-gray-100 px-4 py-2" placeholder="Description" maxlength="250"></textarea>
+          <textarea id="description" class="w-full h-75 resize-none rounded-md border outline-none border-black/10 bg-gray-100 px-4 py-2" name="description" placeholder="Description" maxlength="250"></textarea>
         </div>
     </div>
 
 	<div class="cook-time-input mt-4">
         <label for="cook-name" class="block mb-2">Cook Time</label>
-        <input type="text" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4" placeholder="1 hr 30 min">
+        <input type="text" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4" name="cookTime" placeholder="1 hr 30 min">
     </div>
 
     <div class="instructions-input mt-4">
@@ -169,7 +168,7 @@
           </div> -->
         </div>
         <div class="relative">
-          <textarea id="instructions" class="w-full h-75 resize-none rounded-md border outline-none border-black/10 bg-gray-100 px-4 py-2" placeholder="Instructions" maxlength="250"></textarea>
+          <textarea id="instructions" class="w-full h-75 resize-none rounded-md border outline-none border-black/10 bg-gray-100 px-4 py-2" name="instructions" placeholder="Instructions" maxlength="250"></textarea>
         </div>
     </div>
 
@@ -178,44 +177,41 @@
 		<input type="text" id="ingredients" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4" 
 				bind:value={ingredientSearchQuery} 
 				on:input={handleIngredientInputChange} 
-				on:change={handleIngredientSelection} 
+        on:change={handleIngredientSelection} 
+        name="ingredients"
 				placeholder="Enter Ingredients..." />
 		
-		<div class="flex justify-start items-center flex-wrap w-[435px] pt-2 gap-y-2 gap-x-2">
+		<div class="flex justify-center items-start flex-col gap-y-2">
 			{#each selectedIngredients as option}
-			<div class="border-black/10 border bg-gray-100 max-w-[435px] w-fit rounded-md py-2 px-4 flex justify-start items-center">
-				<p class="">{option}</p>
-				<button class="ml-2 text-red-400 hover:text-red-500" on:click={() => removeIngredientOption(option)}>
-					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+			<div class="bg-blue-100 rounded-md p-2">
+				<span>{option}</span>
+				<button class="ml-2 text-red-500 hover:text-red-700" on:click={() => removeIngredientOption(option)}>
+					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-rounded-minus" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff2825" fill="none" stroke-linecap="round" stroke-linejoin="round">
+						<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+						<path d="M9 12h6" />
+						<path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
 					  </svg>
 				</button>
 			  </div>
 			{/each}
 		</div>
+	
+		<!-- {#if ingredientSearchQuery && !selectedIngredients.includes(ingredientSearchQuery)}
+			<div>
+				<span>{ingredientSearchQuery}</span>
+				<button on:click={() => selectIngredientOption(ingredientSearchQuery)}>Add</button>
+			</div>
+		{/if} -->
 	</div>
 							
 							
 	<div class="categories-input mt-8">
 		<label for="categories" class="block mb-2">Categories</label>
-
-		<select id="categories" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4"
-			bind:value={categorySearchQuery}
-			on:change={handleCategorySelection}
-			on:click={() => categorySearchQuery = ""}
-			placeholder="Search Categories...">
-				<option value="" disabled hidden>Select a category</option>
-				{#each categoryOptions as option}
-					{#if option.toLowerCase().includes(categorySearchQuery.toLowerCase())}
-						<option value={option}>{option}</option>
-					{/if}
-				{/each}
-		</select>
-
-		<!-- <input type="text" id="categories" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4" 
+		<input type="text" id="categories" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4" 
 				bind:value={categorySearchQuery} 
 				on:input={handleCategoryInputChange} 
-				on:change={handleCategorySelection} 
+        on:change={handleCategorySelection} 
+        name="categories"
 				placeholder="Search Categories..." 
 				list="category-options" />
 
@@ -226,26 +222,35 @@
 				<option value={option} />
 				{/if}
 			{/each}
-		</datalist> -->
+		</datalist>
 		
-		<div class="flex justify-start items-center flex-wrap w-[435px] pt-2 gap-y-2 gap-x-2">
+		<div class="flex justify-center items-start flex-col gap-y-2">
 			{#each selectedCategories as option}
-			<div class="border-black/10 border bg-gray-100 max-w-[435px] w-fit rounded-md py-2 px-4 flex justify-start items-center">
-				<p class="">{option}</p>
-				<button class="ml-2 text-red-400 hover:text-red-500" on:click={() => removeCategoryOption(option)}>
-					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+			<div class="bg-blue-100 rounded-md p-2">
+				<span>{option}</span>
+				<button class="ml-2 text-red-500 hover:text-red-700" on:click={() => removeCategoryOption(option)}>
+					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-rounded-minus" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff2825" fill="none" stroke-linecap="round" stroke-linejoin="round">
+						<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+						<path d="M9 12h6" />
+						<path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
 					  </svg>
 				</button>
 			  </div>
 			{/each}
 		</div>
+		<!-- {#if categorySearchQuery && !selectedOptions.includes(categorySearchQuery)}
+			<div>
+				<span>{categorySearchQuery}</span>
+				<button on:click={() => selectOption(categorySearchQuery)}>Add</button>
+			</div>
+		{/if} -->
 	</div>
 
     <div class="w-full h-11 flex justify-start items-center mt-6 mb-4">
-        <button class="w-full h-full bg-[#121212] text-white rounded-md text-center">
+        <button type="submit" class="w-full h-full bg-[#121212] text-white rounded-md text-center">
             Save
         </button>
     </div>
+   </form>
 
 </div>

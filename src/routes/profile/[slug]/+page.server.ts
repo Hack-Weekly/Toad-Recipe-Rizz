@@ -1,45 +1,76 @@
-import { redirect, fail } from "@sveltejs/kit"
+import { error, fail } from "@sveltejs/kit"
 import type { PageServerLoad, Actions } from "./$types"
 import { client } from "$lib/server/lucia"
-/* Possible Spaghetti That Fuffils Its Purpose, Written With Much Love By: Bionic <3 */
+/* Possible Spaghetti That Fulffils Its Purpose, Written With Much Love By: Bionic <3 */
 
-export const load: PageServerLoad = async ({ locals, params }) => {
-    const { session } = await locals.auth.validateUser()
+export const load: PageServerLoad = async ({ params, parent, locals }) => {
+    try {
+        const { session } = await locals.auth.validateUser()
+        const getUserProfile = await client.profile.findFirst({
+            where: {
+                slug: params.slug
+            },
+            select: {
+                name: true,
+                slug: true,
+                created_at: true,
+                id: true,
+            }
+        })
 
-    if (session) {
-        const getUserProfile = await client.profile.findUnique({
-        where: {
-            id: session.userId,
-        },
-        select: {
-            name: true,
-            slug: true,
-            id: true,
-        }
-      })
-
-    const getUserInfo = await client.authUser.findUnique({
-        where: {
-            id: session.userId,
-        },
-        select: {
-            username: true,
-            picture: true,
-        }
-    })
-
-    // If profile with slug is equal to the param slug then return profile values.
-    console.log(getUserInfo, getUserProfile)
-    if (getUserProfile?.slug === params.slug) {
+        if(getUserProfile?.id) {
+            
+            const userRecipes = await client.recipe.findMany({
+                where: {
+                    user_id: getUserProfile?.id
+                },
+                select: {
+                    name: true,
+                    slug: true,
+                    created_at: true,
+                    updated_at: true,
+                }
+            })
+            const getJoinedCategories = await client.user_Category.findMany({
+                where: {
+                    user_id: getUserProfile!.id
+                },
+                select: {
+                    category_id: true
+                }
+            })
+            let categories:Array<Object> = []
+            if(getJoinedCategories) {
+                categories = await client.category.findMany({
+                    where: {
+                        id: {
+                            in: getJoinedCategories.map((category) => category.category_id)
+                        }
+                    },
+                    select: {
+                        name: true,
+                        id: true,
+                    }
+                })
+            }
+        
         return {
-            name: getUserProfile.name,
-            username: getUserInfo?.username,
-            userPicture: getUserInfo?.picture
-        }
+            profile: {
+                name: getUserProfile?.name,
+                slug: getUserProfile?.slug,
+                created_at: getUserProfile?.created_at,
+            },
+            recipes: userRecipes,
+            categories: categories
+        }   
     } else {
-    throw redirect(308, `http://localhost:5173/profile/${getUserProfile?.slug}`) // http code 308 makes sense I think, but change if not.
+        throw error(404, { message: "User not found" })
+    }       
+    } catch (err) {
+        console.log(err)
+        throw error(400, { message: "Request Failed!" })
     }
-  } else throw redirect(302, "http://localhost:5173/auth/sign-up") // redirect user to sign-up if user tries to view profile
+
 }
 
 /* TODO MAYBE ADD DEFAULT VALUES IF THE LENGTH OF THE ROWS IM TRYING TO UPDATA ARE 0 OR EMPTY */
@@ -70,7 +101,7 @@ export const actions: Actions = {
                         name: name
                     }
                 })
-
+                
                 console.log("SUCCESFULLY UPDATED USER AND PROFILE")
             } catch (err) {
                 console.log(err)

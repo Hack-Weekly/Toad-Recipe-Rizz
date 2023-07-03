@@ -12,9 +12,9 @@ datasource db {
 }
 
 model AuthUser {
-  id           String        @id @unique
+  id           String        @id
   email String @unique
-  username     String        @unique
+  username     String
   auth_session AuthSession[]
   auth_key     AuthKey[]
   picture String
@@ -24,6 +24,7 @@ model AuthUser {
   Recipe    	Recipe[]
   User_Category User_Category[]
   @@map("auth_user")
+  @@unique([id, username])
 }
 
 model AuthSession {
@@ -31,7 +32,7 @@ model AuthSession {
   user_id        String
   active_expires BigInt
   idle_expires   BigInt
-  auth_user      AuthUser @relation(references: [id], fields: [user_id], onDelete: Cascade)
+  auth_user      AuthUser @relation(references: [id], fields: [user_id], onDelete: Cascade, onUpdate: Cascade)
   @@index([user_id])
   @@map("auth_session")
 }
@@ -39,30 +40,31 @@ model AuthSession {
 model AuthKey {
   id              String   @id @unique
   hashed_password String?
-  user_id         String
+  user_id         String @unique
   primary_key     Boolean
   expires         BigInt?
-  auth_user       AuthUser @relation(references: [id], fields: [user_id], onDelete: Cascade)
+  auth_user       AuthUser @relation(references: [id], fields: [user_id], onDelete: Cascade, onUpdate: Cascade)
   @@index([user_id])
   @@map("auth_key")
 }
 
 model Profile {
-  id         String     @id @unique
+  id         String     @id @default(cuid())
   user_id    String
   name       String
   slug       String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  user      AuthUser @relation(references: [id], fields: [user_id])
-  @@index([user_id])
+  user      AuthUser @relation(references: [id, username], fields: [user_id, slug], onDelete: Cascade, onUpdate: Cascade)
+  @@index([user_id, slug])
 }
 
 model Recipe {
-  id              String             @id @unique()
-  user_id         String
+  // Added an automatically generated id
+  id String @id @default(cuid())
+  user_id String
   name            String
-  slug            String
+  slug            String @unique
   description     String
   ingredients     Json
   instructions    Json
@@ -70,9 +72,8 @@ model Recipe {
   picture         String
   created_at      DateTime          @default(now())
   updated_at      DateTime          @updatedAt
-  user            AuthUser @relation(references: [id], fields: [user_id])
+  user            AuthUser @relation(references: [id], fields: [user_id], onDelete: Cascade, onUpdate: Cascade)
   Recipe_Category Recipe_Category[]
-
   @@index([user_id])
 }
 
@@ -80,7 +81,7 @@ model User_Category {
   id          String      @id @unique
   user_id     String
   category_id String
-  user        AuthUser @relation(references: [id], fields: [user_id], onDelete: Cascade)
+  user        AuthUser @relation(references: [id], fields: [user_id], onDelete: Cascade, onUpdate: Cascade)
   category    Category @relation(fields: [category_id], references: [id])
   @@index([user_id])
   @@index([category_id])
@@ -102,7 +103,7 @@ model Recipe_Category {
   id          String      @id @unique
   recipe_id   String
   category_id String
-  recipe      Recipe   @relation(fields: [recipe_id], references: [id])
+  recipe      Recipe   @relation(references: [id], fields: [id])
   category    Category @relation(fields: [category_id], references: [id])
 
   @@index([recipe_id])

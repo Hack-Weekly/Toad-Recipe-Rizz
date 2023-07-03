@@ -3,8 +3,8 @@ import {v2 as cloudinary} from 'cloudinary'
 import type {Actions, PageServerLoad} from "./$types";
 import {auth, client} from "$lib/server/lucia";
 
-export const load: PageServerLoad = async ({locals, params}) => {
-    const {session} = await locals.auth.validateUser()
+export const load: PageServerLoad = async ({ locals, parent }) => {
+    const { session } = await locals.auth.validateUser()
 
     if (!session) throw redirect(302, "http://localhost:5173/auth/sign-up") // redirect user to sign-up if user tries to view profile
 
@@ -32,6 +32,7 @@ export const actions: Actions = {
         const userId = session.userId;
 
         const account = await request.formData()
+
         // const { picture } = Object.fromEntries(account) as Record<string, string>
         const picture = (await account).get('picture') as File
         const username = account.get('username') as string
