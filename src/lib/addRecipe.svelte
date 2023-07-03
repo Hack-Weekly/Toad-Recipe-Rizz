@@ -248,7 +248,7 @@
 
     <div class="w-full h-11 flex justify-start items-center mt-6 mb-4">
         <button class="w-full h-full bg-[#121212] text-white rounded-md text-center">
-            <p class="text-white"> Save </p>
+            Save
         </button>
     </div>
 

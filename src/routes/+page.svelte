@@ -4,11 +4,7 @@
     // @ts-ignore
     import ShortRecipe from '$lib/shortRecipe.svelte';
     import ProfileHeader from '$lib/profileHeader.svelte';
-    import AddRecipe from '$lib/addRecipe.svelte';
     import { page } from '$app/stores';
-    import Account from '$lib/account.svelte';
-    import { enhance } from '$app/forms';
-
     console.log($page.data)
 </script>  
 
