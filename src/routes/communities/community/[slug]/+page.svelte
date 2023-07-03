@@ -4,16 +4,6 @@
     import ProfileHeader from '$lib/profileHeader.svelte';
     import { page } from '$app/stores';
     import { enhance } from '$app/forms';
-    import { onMount } from 'svelte';
-
-    let recipes = [];
-
-  onMount(async () => {
-        // use the proxy endpoint
-        const response = await fetch('/recipes');
-        recipes = await response.json();
-        console.log(recipes)
-    });
 
     console.log($page.data)
 </script>  

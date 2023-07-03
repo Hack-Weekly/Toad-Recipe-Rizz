@@ -97,7 +97,7 @@
   </script>
 
 
-<div class="profile-container px-4 h-full">
+<div class="profile-container px-4 overflow-y-auto h-screen">
 
     <!-- <div class="profile-label px-4 py-2 mt-4">
         <p class="text-black text-xl w-160 h-50">Add Recipe</p>
@@ -181,15 +181,13 @@
 				on:change={handleIngredientSelection} 
 				placeholder="Enter Ingredients..." />
 		
-		<div class="flex justify-center items-start flex-col gap-y-2">
+		<div class="flex justify-start items-center flex-wrap w-[435px] pt-2 gap-y-2 gap-x-2">
 			{#each selectedIngredients as option}
-			<div class="bg-blue-100 rounded-md p-2">
-				<span>{option}</span>
-				<button class="ml-2 text-red-500 hover:text-red-700" on:click={() => removeIngredientOption(option)}>
-					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-rounded-minus" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff2825" fill="none" stroke-linecap="round" stroke-linejoin="round">
-						<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-						<path d="M9 12h6" />
-						<path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
+			<div class="border-black/10 border bg-gray-100 max-w-[435px] w-fit rounded-md py-2 px-4 flex justify-start items-center">
+				<p class="">{option}</p>
+				<button class="ml-2 text-red-400 hover:text-red-500" on:click={() => removeIngredientOption(option)}>
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
 					  </svg>
 				</button>
 			  </div>
@@ -223,15 +221,13 @@
 			{/each}
 		</datalist>
 		
-		<div class="flex justify-center items-start flex-col gap-y-2">
+		<div class="flex justify-start items-center flex-wrap w-[435px] pt-2 gap-y-2 gap-x-2">
 			{#each selectedCategories as option}
-			<div class="bg-blue-100 rounded-md p-2">
-				<span>{option}</span>
-				<button class="ml-2 text-red-500 hover:text-red-700" on:click={() => removeCategoryOption(option)}>
-					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-rounded-minus" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff2825" fill="none" stroke-linecap="round" stroke-linejoin="round">
-						<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-						<path d="M9 12h6" />
-						<path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
+			<div class="border-black/10 border bg-gray-100 max-w-[435px] w-fit rounded-md py-2 px-4 flex justify-start items-center">
+				<p class="">{option}</p>
+				<button class="ml-2 text-red-400 hover:text-red-500" on:click={() => removeCategoryOption(option)}>
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
 					  </svg>
 				</button>
 			  </div>
