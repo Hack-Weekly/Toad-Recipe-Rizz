@@ -62,8 +62,8 @@
 	// @ts-ignore
 	function handleCategorySelection(event) {
 		const selectedValue = event.target.value;
-		if (selectedValue && !selectedCategories.includes(selectedValue)) {
-		selectCategoryOption(selectedValue);
+		if (selectedValue && !selectedCategories.includes(selectedValue) && categoryOptions.includes(selectedValue)) {
+			selectCategoryOption(selectedValue);
 		}
 	}
 
@@ -193,19 +193,26 @@
 			  </div>
 			{/each}
 		</div>
-	
-		<!-- {#if ingredientSearchQuery && !selectedIngredients.includes(ingredientSearchQuery)}
-			<div>
-				<span>{ingredientSearchQuery}</span>
-				<button on:click={() => selectIngredientOption(ingredientSearchQuery)}>Add</button>
-			</div>
-		{/if} -->
 	</div>
 							
 							
 	<div class="categories-input mt-8">
 		<label for="categories" class="block mb-2">Categories</label>
-		<input type="text" id="categories" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4" 
+
+		<select id="categories" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4"
+			bind:value={categorySearchQuery}
+			on:change={handleCategorySelection}
+			on:click={() => categorySearchQuery = ""}
+			placeholder="Search Categories...">
+				<option value="" disabled hidden>Select a category</option>
+				{#each categoryOptions as option}
+					{#if option.toLowerCase().includes(categorySearchQuery.toLowerCase())}
+						<option value={option}>{option}</option>
+					{/if}
+				{/each}
+		</select>
+
+		<!-- <input type="text" id="categories" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4" 
 				bind:value={categorySearchQuery} 
 				on:input={handleCategoryInputChange} 
 				on:change={handleCategorySelection} 
@@ -219,7 +226,7 @@
 				<option value={option} />
 				{/if}
 			{/each}
-		</datalist>
+		</datalist> -->
 		
 		<div class="flex justify-start items-center flex-wrap w-[435px] pt-2 gap-y-2 gap-x-2">
 			{#each selectedCategories as option}
@@ -233,13 +240,6 @@
 			  </div>
 			{/each}
 		</div>
-	
-		<!-- {#if categorySearchQuery && !selectedOptions.includes(categorySearchQuery)}
-			<div>
-				<span>{categorySearchQuery}</span>
-				<button on:click={() => selectOption(categorySearchQuery)}>Add</button>
-			</div>
-		{/if} -->
 	</div>
 
     <div class="w-full h-11 flex justify-start items-center mt-6 mb-4">
