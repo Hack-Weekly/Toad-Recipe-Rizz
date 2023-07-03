@@ -1,9 +1,11 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
     import { enhance } from "$app/forms";
+    import { page } from "$app/stores";
     export let data
+    console.log($page)
     console.log(data)
-    const { isUser, username, name, userPicture, userRecipes } = data
+    const { username, name, userPicture, userRecipes } = data
 </script>
 
 <!---- Whoever is working on UI this is just a placeholder. ---->
@@ -11,7 +13,7 @@
 <h1>WELCOME {name}</h1>
 <h2>USERNAME {username}</h2>
 <img src={userPicture} class="w-fit h-fit"/>
-{#if isUser}
+{#if $page.data.session.userId}
 <form method="POST" use:enhance>
  <!-- No clue on how we will change user profile picture tbh, ill just add a image url input for now ---->
  <input type="text" name="name" class="border-2" placeholder="name">
@@ -28,7 +30,7 @@
     <h2>creator: {username}</h2>
     <h2>created: {created_at}</h2>
     <h2>updated: {updated_at}</h2>
-     {#if isUser}
+     {#if $page.data.session.userId}
         <button on:click={() => goto(`http://localhost:5173/profile/${username}/myrecipes/delete/${slug}`)} class="bg-red-500 border-4 text-white">Delete</button>
         <button on:click={() => goto(`http://localhost:5173/profile/${username}/myrecipes/update/${slug}`)} class="bg-blue-500 text-white">Update</button>
      {/if}

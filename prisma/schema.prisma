@@ -40,7 +40,7 @@ model AuthSession {
 model AuthKey {
   id              String   @id @unique
   hashed_password String?
-  user_id         String
+  user_id         String @unique
   primary_key     Boolean
   expires         BigInt?
   auth_user       AuthUser @relation(references: [id], fields: [user_id], onDelete: Cascade, onUpdate: Cascade)
@@ -52,7 +52,7 @@ model Profile {
   id         String     @id @default(cuid())
   user_id    String
   name       String
-  slug       String 
+  slug       String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   user      AuthUser @relation(references: [id, username], fields: [user_id, slug], onDelete: Cascade, onUpdate: Cascade)

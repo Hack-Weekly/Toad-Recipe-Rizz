@@ -38,24 +38,13 @@ export const load: PageServerLoad = async ({ params, parent }) => {
                 updated_at: true,
             }
         })
-
-        if (getUserProfile?.id ===(await parent()).userId) {
-            return {
-                isUser: true,
-                name: getUserProfile?.name,
-                username: getUserInfo?.username,
-                userPicture: getUserInfo?.picture,
-                userRecipes
-            }
-        }
-
-         return {
-            isUser: false,
+        return {
             name: getUserProfile?.name,
             username: getUserInfo?.username,
             userPicture: getUserInfo?.picture,
-            userRecipes
-            }
+            userRecipes,
+            getUserProfile
+        }
     } catch (err) {
         console.log(err)
         throw error(404, { message: "Not Found" })
@@ -91,7 +80,7 @@ export const actions: Actions = {
                         name: name
                     }
                 })
-
+                
                 console.log("SUCCESFULLY UPDATED USER AND PROFILE")
             } catch (err) {
                 console.log(err)

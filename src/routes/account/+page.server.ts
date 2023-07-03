@@ -34,9 +34,9 @@ export const actions: Actions = {
         }
 
         const account = await request.formData()
-        const { username, email, password } = Object.fromEntries(account) as Record<string, string>
+        const { name, email, password } = Object.fromEntries(account) as Record<string, string>
         const picture = account.get('picture') as File
-        await changeUsernameAndPassword(username, email, password, session.userId)
+        await changeUsernameAndPassword(name, email, password, session.userId)
 
         if (picture) {
         const con = cloudinary.config({
