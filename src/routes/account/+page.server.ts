@@ -39,6 +39,7 @@ export const actions: Actions = {
         
         if(picture) {    
 
+            
         const con = cloudinary.config({
             cloud_name: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME,
             api_key: import.meta.env.VITE_CLOUDINARY_KEY,
