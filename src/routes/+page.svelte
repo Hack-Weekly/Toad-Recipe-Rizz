@@ -5,7 +5,6 @@
     import { page } from '$app/stores';
     import { enhance } from '$app/forms';
     import { onMount } from 'svelte';
-	import AddRecipe from '$lib/addRecipe.svelte';
 
     let recipes = [];
 
@@ -23,11 +22,9 @@
 
 
     <ProfileHeader />
-
-    <AddRecipe />
-
+    
     <div class="overflow-y-auto mb-6">
-        <!-- <ShortRecipe  /> -->
+        <ShortRecipe  />
         <!-- <Communities  /> -->
     </div>
 
