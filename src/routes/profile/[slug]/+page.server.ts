@@ -101,7 +101,7 @@ export const actions: Actions = {
                         name: name
                     }
                 })
-
+                
                 console.log("SUCCESFULLY UPDATED USER AND PROFILE")
             } catch (err) {
                 console.log(err)

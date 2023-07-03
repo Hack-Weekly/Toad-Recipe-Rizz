@@ -1,9 +1,9 @@
 <script>
-	import defaultPic from '$lib/assets/defaultPic.png';
+  // why arent we using the public folder for static assets?
+	// import defaultPic from '$lib/assets/defaultPic.png';
   import { enhance } from '$app/forms';
-	
-	let profilePic = defaultPic;
-
+  import { page } from '$app/stores';
+	let profilePic = $page.data.picture;
 	// @ts-ignore
 	function handleFileInputChange(event) {
 		const file = event.target.files[0];
@@ -14,7 +14,7 @@
 				if (typeof result === 'string') {
 					profilePic = result;
 				} else {
-					profilePic = defaultPic;
+					profilePic = $page.data.picture;
 				}
 			};
 			reader.readAsDataURL(file);

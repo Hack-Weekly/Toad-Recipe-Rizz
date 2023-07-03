@@ -1,12 +1,12 @@
 import { redirect } from "@sveltejs/kit";
-import { v2 as cloudinary } from 'cloudinary'
+import { v2 as cloudinary } from "cloudinary"
 import type { Actions } from "./$types";
 import { client } from "$lib/server/lucia";
 import type { PageServerLoad } from "./$types";
-import { writeFile } from 'fs/promises';
-import console from "console";
+import { changeUsernameAndPassword } from "../../prismaQueries";
+import { VITE_CLOUDINARY_CLOUD_NAME, VITE_CLOUDINARY_KEY, VITE_CLOUDINARY_SECRET } from "$env/static/private"
 
-export const load: PageServerLoad = async ({ locals, params }) => {
+export const load: PageServerLoad = async ({ locals, parent }) => {
     const { session } = await locals.auth.validateUser()
 
     if (!session) throw redirect(302, "http://localhost:5173/auth/sign-up") // redirect user to sign-up if user tries to view profile
@@ -34,37 +34,34 @@ export const actions: Actions = {
         }
 
         const account = await request.formData()
-        // const { picture } = Object.fromEntries(account) as Record<string, string>
-        const picture = (await account).get('picture') as File
-        
-        if(picture) {    
+        const { name, email, password } = Object.fromEntries(account) as Record<string, string>
+        const picture = account.get('picture') as File
+        await changeUsernameAndPassword(name, email, password, session.userId)
 
-            
+        if (picture) {
         const con = cloudinary.config({
-            cloud_name: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME,
-            api_key: import.meta.env.VITE_CLOUDINARY_KEY,
-            api_secret: import.meta.env.VITE_CLOUDINARY_SECRET,
+            cloud_name: VITE_CLOUDINARY_CLOUD_NAME,
+            api_key: VITE_CLOUDINARY_KEY,
+            api_secret: VITE_CLOUDINARY_SECRET,
             secure: true
         });
-
-
-        // console.log(con)
 
         const options = {
             use_filename: true,
             unique_filename: false,
             overwrite: true,
         };
-
+        // THIS IS BIONIC THIS SHIT DOESNT WORK FOR ME IDK WHY ITS NOT BEING PUSHED TO DB LOL.
         const arrayBuffer = await picture.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer)
 
-        const upload = await cloudinary.uploader.upload_stream({
+        const upload = cloudinary.uploader.upload_stream({
             resource_type: "image",
             folder: "accounts",
             public_id: session.userId,
             overwrite: true,
-        }, async (err, result) => {
+        },
+        async (err, result) => {
             const storePictureUrl = await client.authUser.update({
                 where: {
                     id: session.userId
@@ -73,13 +70,11 @@ export const actions: Actions = {
                     picture: result?.secure_url
                 }
             })
+            console.log(result, err)
         }).end(buffer)
 
+        console.log(upload, buffer)
     }
-        // this is unreadable code, i have no idea how to make it more readable
-
-        // console.log(picUrl);
-        // console.log(storePictureUrl)
     }
 }
 
