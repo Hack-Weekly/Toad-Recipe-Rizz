@@ -65,8 +65,9 @@ export const actions: Actions = {
         const categoriesArr = categories.split(",")
         
         console.log(categoriesArr)
+        let categoriesIdArr: number[]
         for (const categoryName of categoriesArr) {
-            await client.category.findFirst({
+          const category =  await client.category.findFirst({
                 where: {
                     name: categoryName,
                 },
@@ -74,6 +75,8 @@ export const actions: Actions = {
                     id: true,
                 }
             })
+
+            categoriesIdArr.push(category?.id)
             }
         if (recipeThumbnail) {
         const con = cloudinary.config({
