@@ -22,13 +22,29 @@ export async function getRecipe (val: string) {
 }
 
 // I know 6 params is a lot but it does everything we need
-export async function changeUsernameAndPassword (username: string, email: string, password: string, userId: string) {
+export async function changeUsernameAndPassword (name: string, email: string, password: string, userId: string) {
     try {
         const user = await auth.getUser(userId)
-        const updatedUsername = username !== '' ? username : user.username;
+        const profile = await client.profile.findUnique({
+            where: {
+                id: user.id,
+            },
+            select: {
+                name: true,
+            }
+        })
+        const updatedName = name !== '' ? name : profile?.name;
         const updatedEmail = email !== '' ? email : user.email;
-        const updatedUser = await auth.updateUserAttributes(userId, { username: updatedUsername, email: updatedEmail })
-        console.log("USER ATTRIBUTES CHANGED:", username, email, password)
+        const updatedUser = await auth.updateUserAttributes(userId, { email: updatedEmail })
+        const updateDisplayName = await client.profile.update({ 
+            where: { 
+                id: updatedUser.id 
+            },
+            data: {
+                name: name,
+            }
+        })
+        console.log("USER ATTRIBUTES CHANGED:", name, email, password)
         if (password.length === 0) return
         await auth.updateKeyPassword("username", user.username, null)
         console.log(user.username)

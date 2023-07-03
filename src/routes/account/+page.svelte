@@ -4,6 +4,7 @@
 	// import defaultPic from '$lib/assets/defaultPic.png';
   import { enhance } from '$app/forms';
   import { page } from '$app/stores';
+  import { goto } from '$app/navigation';
 	let profilePic = $page.data.picture;
 	// @ts-ignore
 	function handleFileInputChange(event) {
@@ -56,7 +57,7 @@
             </div>
     
             <div class="flex justify-center">
-                <button class="bg-[#FFE1DE] text-red-700 py-1 px-6 rounded-md border border-red-300">
+                <button on:click={()=> goto("http://localhost:5173/auth/delete")} class="bg-[#FFE1DE] text-red-700 py-1 px-6 rounded-md border border-red-300">
                    Delete
                 </button>
             </div>
@@ -66,8 +67,8 @@
     </div>
     <form method="POST" use:enhance>
     <div class="username-input w-full mt-4">
-        <label for="username" class="block mb-2">Username</label>
-        <input type="text" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4" name="username" placeholder="shaniayanofc">
+        <label for="username" class="block mb-2">Name</label>
+        <input type="text" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4" name="name" placeholder="shaniayanofc">
     </div>
 
     <div class="email-input mt-4">
