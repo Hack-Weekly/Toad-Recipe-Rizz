@@ -1,36 +1,53 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
     import { enhance } from "$app/forms";
-    export let data
-    console.log(data)
-    const { isUser, username, name, userPicture, userRecipes } = data
+    import Communities from '$lib/communities.svelte';
+    import ProfileHeader from "$lib/profileHeader.svelte";
+    // @ts-ignore
+    import ShortRecipe from '$lib/shortRecipe.svelte';
+    import UserProfilePageHeader from '$lib/UserProfilePageHeader.svelte';
+    import { page } from '$app/stores';
+
 </script>
 
-<!---- Whoever is working on UI this is just a placeholder. ---->
+<section class="center w-full h-screen relative flex justify-start items-center flex-col">
+    <ProfileHeader/>
+    <UserProfilePageHeader />
 
-<h1>WELCOME {name}</h1>
-<h2>USERNAME {username}</h2>
-<img src={userPicture} class="w-fit h-fit"/>
-{#if isUser}
-<form method="POST" use:enhance>
- <!-- No clue on how we will change user profile picture tbh, ill just add a image url input for now ---->
- <input type="text" name="name" class="border-2" placeholder="name">
- <input type="text" name="img" class="border-2" placeholder="profileImageUrl">
- <button  type="submit" class="border-2">submit</button>
-</form>
-{/if}
+    <div class="overflow-y-auto mt-24 border-t border-gray-300">
+            <ShortRecipe  />
+        <div>
+            <h2 class="mt-6 ml-8 text-xl">Joined communities:</h2>
+            {#if $page.data.categories.length == 0}
+                <p class="mt-4 ml-8 text-gray-500">This user hasn't joined any communities yet.</p>
+            {:else }
+            <Communities/>
+            {/if}
+        </div>
+    </div>
 
-<h1>MYRECIPES PAGE</h1>
+    <div class="search w-full p-4 border-t border-gray-300 hidden max-xl:block">
+        <div class="search-holder relative flex justify-center items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 absolute right-4 text-black/75">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+            </svg>
+            <input type="text" class="w-full h-11 rounded-full border outline-none border-black/10 bg-gray-100 px-4" placeholder="Search categories...">
+        </div>
+    </div>
 
-{#each userRecipes as {name, slug, created_at, updated_at}}
-<div>
-    <h1>{name}</h1>
-    <h2>creator: {username}</h2>
-    <h2>created: {created_at}</h2>
-    <h2>updated: {updated_at}</h2>
-     {#if isUser}
-        <button on:click={() => goto(`http://localhost:5173/profile/${username}/myrecipes/delete/${slug}`)} class="bg-red-500 border-4 text-white">Delete</button>
-        <button on:click={() => goto(`http://localhost:5173/profile/${username}/myrecipes/update/${slug}`)} class="bg-blue-500 text-white">Update</button>
-     {/if}
-</div>
-{/each}
+</section>
+
+<section class="end w-96 min-w-[384px] h-full border-l border-gray-300 pt-6 px-4 max-xl:hidden">
+
+    <div class="search">
+        <div class="search-holder relative flex justify-center items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 absolute right-4 text-black/75">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+            </svg>
+            <input type="text" class="w-full h-11 rounded-full border outline-none border-black/10 bg-gray-100 px-4" placeholder="Search categories...">
+        </div>
+    </div>
+
+</section>
+<!-- <button on:click={() => goto(`http://localhost:5173/profile/${username}/myrecipes/delete/${slug}`)} class="bg-red-500 border-4 text-white">Delete</button>
+        <button on:click={() => goto(`http://localhost:5173/profile/${username}/myrecipes/update/${slug}`)} class="bg-blue-500 text-white">Update</button> -->

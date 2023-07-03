@@ -17,6 +17,20 @@ export const load: PageServerLoad = async ({ params, parent }) => {
             }
         })
 
+
+    if (session) {
+        const getUserProfile = await client.profile.findUnique({
+        where: {
+            id: session.userId,
+        },
+        select: {
+            name: true,
+            slug: true,
+            id: true,
+            created_at: true
+        }
+      })
+
         const getUserInfo = await client.authUser.findUnique({
             where: {
                 id: getUserProfile?.id,
@@ -49,6 +63,46 @@ export const load: PageServerLoad = async ({ params, parent }) => {
             }
         }
 
+
+    const getJoinedCategories = await client.user_Category.findMany({
+        where: {
+            user_id: getUserProfile!.id
+        },
+        select: {
+            category_id: true
+        }
+    })
+    
+    let categories:Array<Object> = []
+    if(getJoinedCategories) {
+        categories = await client.category.findMany({
+            where: {
+                id: {
+                    in: getJoinedCategories.map((category) => category.category_id)
+                }
+            },
+            select: {
+                name: true,
+                id: true,
+            }
+        })
+    }
+
+    // If profile with slug is equal to the param slug then return profile values.
+    if (getUserProfile?.slug === params.slug) {
+        return {
+            profile: {
+                id: getUserProfile.id,
+                name: getUserProfile.name,
+                username: getUserInfo?.username,
+                userPicture: getUserInfo?.picture,
+                created_at: getUserProfile.created_at
+                userRecipes
+            },
+            categories: categories
+        }
+    } else {
+    throw redirect(308, `http://localhost:5173/profile/${getUserProfile?.slug}`) // http code 308 makes sense I think, but change if not.
          return {
             isUser: false,
             name: getUserProfile?.name,
