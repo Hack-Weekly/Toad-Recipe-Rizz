@@ -4,10 +4,10 @@
     // @ts-ignore
     import ShortRecipe from '$lib/shortRecipe.svelte';
     import ProfileHeader from '$lib/profileHeader.svelte';
-    import Profile from '$lib/profile.svelte';
     import AddRecipe from '$lib/addRecipe.svelte';
     import { page } from '$app/stores';
     import Account from '$lib/account.svelte';
+    import { enhance } from '$app/forms';
 
     console.log($page.data)
 </script>  
@@ -17,12 +17,8 @@
 
     <ProfileHeader />
 
-
-    <!-- <Account /> -->
-    <AddRecipe />
-
     <div class="overflow-y-auto mb-6">
-        <!-- <ShortRecipe  /> -->
+        <ShortRecipe  />
         <!-- <Communities  /> -->
     </div>
 
@@ -49,5 +45,3 @@
     </div>
 
 </section>
-
-<a href="/auth/delete" class="border-8">Delete</a>

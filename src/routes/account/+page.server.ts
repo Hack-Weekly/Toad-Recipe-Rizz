@@ -36,6 +36,8 @@ export const actions: Actions = {
         const account = await request.formData()
         // const { picture } = Object.fromEntries(account) as Record<string, string>
         const picture = (await account).get('picture') as File
+        
+        if(picture) {    
 
         const con = cloudinary.config({
             cloud_name: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME,
@@ -43,6 +45,7 @@ export const actions: Actions = {
             api_secret: import.meta.env.VITE_CLOUDINARY_SECRET,
             secure: true
         });
+
 
         // console.log(con)
 
@@ -70,6 +73,8 @@ export const actions: Actions = {
                 }
             })
         }).end(buffer)
+
+    }
         // this is unreadable code, i have no idea how to make it more readable
 
         // console.log(picUrl);

@@ -107,7 +107,7 @@
         
         <div class="">
             <div class="bg-[#175BCC] rounded-full w-32 h-32 flex items-center justify-center">
-				<img src={profilePic} alt="Profile Pic" class="rounded-full w-full h-full" />
+				<img src={profilePic} alt="Profile Pic" class="rounded-full w-full h-full object-cover" />
             </div>
         </div>
 
