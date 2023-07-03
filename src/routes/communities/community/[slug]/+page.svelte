@@ -1,30 +1,21 @@
 <script lang="ts">
-    import { goto } from "$app/navigation";
-    import { enhance } from "$app/forms";
-    import Communities from '$lib/communities.svelte';
-    import ProfileHeader from "$lib/profileHeader.svelte";
     // @ts-ignore
     import ShortRecipe from '$lib/shortRecipe.svelte';
-    import UserProfilePageHeader from '$lib/UserProfilePageHeader.svelte';
+    import ProfileHeader from '$lib/profileHeader.svelte';
     import { page } from '$app/stores';
-    export let data;
+    import { enhance } from '$app/forms';
 
-</script>
+    console.log($page.data)
+</script>  
 
 <section class="center w-full h-screen relative flex justify-start items-center flex-col">
-    <ProfileHeader/>
-    <UserProfilePageHeader data={data}/>
 
-    <div class="overflow-y-auto mt-24 border-t border-gray-300">
-            <ShortRecipe  />
-        <div>
-            <h2 class="mt-6 ml-8 text-xl">Joined communities:</h2>
-            {#if $page.data.categories.length == 0}
-                <p class="mt-4 ml-8 text-gray-500">This user hasn't joined any communities yet.</p>
-            {:else }
-            <Communities/>
-            {/if}
-        </div>
+
+    <ProfileHeader />
+
+    <div class="overflow-y-auto mb-6">
+        <ShortRecipe  />
+        <!-- <Communities  /> -->
     </div>
 
     <div class="search w-full p-4 border-t border-gray-300 hidden max-xl:block">
@@ -50,5 +41,3 @@
     </div>
 
 </section>
-<!-- <button on:click={() => goto(`http://localhost:5173/profile/${username}/myrecipes/delete/${slug}`)} class="bg-red-500 border-4 text-white">Delete</button>
-        <button on:click={() => goto(`http://localhost:5173/profile/${username}/myrecipes/update/${slug}`)} class="bg-blue-500 text-white">Update</button> -->

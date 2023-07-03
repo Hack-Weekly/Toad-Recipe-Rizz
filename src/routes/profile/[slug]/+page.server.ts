@@ -3,9 +3,9 @@ import type { PageServerLoad, Actions } from "./$types"
 import { client } from "$lib/server/lucia"
 /* Possible Spaghetti That Fulffils Its Purpose, Written With Much Love By: Bionic <3 */
 
-export const load: PageServerLoad = async ({ params, parent }) => {
+export const load: PageServerLoad = async ({ params, parent, locals }) => {
     try {
-        console.log(params.slug)
+        const { session } = await locals.auth.validateUser()
         const getUserProfile = await client.profile.findFirst({
             where: {
                 slug: params.slug
@@ -13,52 +13,62 @@ export const load: PageServerLoad = async ({ params, parent }) => {
             select: {
                 name: true,
                 slug: true,
+                created_at: true,
                 id: true,
             }
         })
 
-        const getUserInfo = await client.authUser.findUnique({
-            where: {
-                id: getUserProfile?.id,
-            },
-            select: {
-                username: true,
-                picture: true,
+        if(getUserProfile?.id) {
+            
+            const userRecipes = await client.recipe.findMany({
+                where: {
+                    user_id: getUserProfile?.id
+                },
+                select: {
+                    name: true,
+                    slug: true,
+                    created_at: true,
+                    updated_at: true,
+                }
+            })
+            const getJoinedCategories = await client.user_Category.findMany({
+                where: {
+                    user_id: getUserProfile!.id
+                },
+                select: {
+                    category_id: true
+                }
+            })
+            let categories:Array<Object> = []
+            if(getJoinedCategories) {
+                categories = await client.category.findMany({
+                    where: {
+                        id: {
+                            in: getJoinedCategories.map((category) => category.category_id)
+                        }
+                    },
+                    select: {
+                        name: true,
+                        id: true,
+                    }
+                })
             }
-        })
-
-        const userRecipes = await client.recipe.findMany({
-            where: {
-                user_id: getUserProfile?.id
-            },
-            select: {
-                name: true,
-                slug: true,
-                created_at: true,
-                updated_at: true,
-            }
-        })
-
-        if (getUserProfile?.id ===(await parent()).userId) {
-            return {
-                isUser: true,
+        
+        return {
+            profile: {
                 name: getUserProfile?.name,
-                username: getUserInfo?.username,
-                userPicture: getUserInfo?.picture,
-                userRecipes
-            }
-        }
-
-         return {
-            isUser: false,
-            name: getUserProfile?.name,
-            username: getUserInfo?.username,
-            userPicture: getUserInfo?.picture,
-            userRecipes
-            }
+                slug: getUserProfile?.slug,
+                created_at: getUserProfile?.created_at,
+            },
+            recipes: userRecipes,
+            categories: categories
+        }   
+    } else {
+        throw error(404, { message: "User not found" })
+    }       
     } catch (err) {
         console.log(err)
-        throw error(404, { message: "Not Found" })
+        throw error(400, { message: "Request Failed!" })
     }
 
 }
