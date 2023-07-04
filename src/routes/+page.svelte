@@ -21,7 +21,7 @@
 
 
     <ProfileHeader />
-    
+
     <div class="overflow-y-auto mb-6">
         <ShortRecipe  />
         <!-- <Communities  /> -->
