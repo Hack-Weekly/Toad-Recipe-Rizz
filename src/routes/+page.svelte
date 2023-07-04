@@ -8,14 +8,14 @@
 
     let recipes = [];
 
-  onMount(async () => {
-        // use the proxy endpoint
-        const response = await fetch('/recipes');
-        recipes = await response.json();
-        console.log(recipes)
-    });
+//   onMount(async () => {
+//         // use the proxy endpoint
+//         const response = await fetch('/recipes');
+//         recipes = await response.json();
+//         console.log(recipes)
+//     });
 
-    console.log($page.data)
+    // console.log($page.data)
 </script>  
 
 <section class="center w-full h-screen relative flex justify-start items-center flex-col">
