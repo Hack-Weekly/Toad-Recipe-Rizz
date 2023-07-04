@@ -5,8 +5,6 @@
     import { page } from '$app/stores';
     import { enhance } from '$app/forms';
     import { onMount } from 'svelte';
-	import AddRecipe from '$lib/addRecipe.svelte';
-	import SearchCat from '$lib/addRecipeCategory.svelte';
 
     let recipes = [];
 
