@@ -8,7 +8,6 @@
   	export let form: ActionData
  	let profilePic = $page.data.picture;
   	export let data;
-    console.log(form)
 
  // @ts-ignore
  function handleFileInputChange(event) {
@@ -64,7 +63,7 @@
                              ></path>
                          </svg>
                      </div>
-                     <input class="absolute top-0 left-0 h-14 w-14 opacity-0" id="formInput1-4" type="file" name="picture" on:change="{handleFileInputChange}" />
+                     <input class="absolute top-0 left-0 h-14 w-14 opacity-0" id="picture" type="file" name="picture" on:change="{handleFileInputChange}" />
                  </div>
                  <p class="font-semibold leading-normal mb-1">
                      <span class="text-[#121212]">Click to upload a file</span>
@@ -74,17 +73,21 @@
              </div>
          </div>
      </div>
+     {JSON.stringify(form)}
      {#if form?.message}
-         <div role="alert" class="{form.message == "Updated successfully" ? "border-green-600 bg-green-50" : "border-red-500 bg-red-50"} rounded border-s-4 p-4 mt-2">
-             <strong class="{form.message == "Updated successfully" ? "text-green-700" : "text-red-800" } block font-medium">{form.message == "Updated successfully" ? "Success" : "Something went wrong"}</strong>
-             <p class="mt-2 text-sm {form.message == "Updated successfully" ? "text-green-700" : "text-red-800" }">
-                 {form?.message}
-             </p>
-         </div>
-     {/if}
+        <div role="alert" class="{form.message == "Updated successfully" ? "border-green-600 bg-green-50" : "border-red-500 bg-red-50"} rounded border-s-4 p-4 mt-2">
+            <strong class="{form.message == "Updated successfully" ? "text-green-700" : "text-red-800" } block font-medium">{form.message == "Updated successfully" ? "Success" : "Something went wrong"}</strong>
+            {#each form.message as msg}
+                <p class="mt-2 text-sm {form.message == "Updated successfully" ? "text-green-700" : "text-red-800" }">
+                    {msg.message ? msg.message : 'updated successfully'}
+                </p>
+            {/each}
+        </div>
+    {/if}
+
      <div class="username-input w-full mt-4">
          <label for="username" class="block mb-2">Name</label>
-         <input type="text" name="name" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4" placeholder="shaniayanofc" />
+         <input type="text" name="name" value="{data.profile.name ? data.profile.name : ""}" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4" placeholder="shaniayanofc" />
      </div>
 
      <div class="email-input mt-4">
@@ -97,7 +100,7 @@
 
          <div class="input-container relative flex justify-center items-center">
              <input type={passwordHidden ? "password" : "text"} id="password" name="password" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 pl-3" placeholder="******">
-             <button class="absolute right-0 flex justify-center items-center mr-2" on:click="{togglePassword}">
+             <button type="button" class="absolute right-0 flex justify-center items-center mr-2" on:click="{togglePassword}">
                  {#if passwordHidden}
                  <div class="">
                      <svg
