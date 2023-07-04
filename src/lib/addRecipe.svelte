@@ -1,6 +1,8 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
     import defaultPic from '$lib/assets/defaultPic.png';
+	import SearchCat from './addRecipeCategory.svelte';
+	import AddRecipeCategory from './addRecipeCategory.svelte';
 	
 	let profilePic = defaultPic;
 
@@ -21,51 +23,10 @@
   		}
 	}
 
-
-	let categorySearchQuery = '';
   	let ingredientSearchQuery = '';
-	let selectedCategories: any[] = [];
 	let selectedIngredients: any[] = [];
 
-	let categoryOptions = [
-		'Option 1',
-		'Option 21212312312312 oPdjakfakjf012sdafkla23rklaweslkdpoe3wfrfdoik0-21',
-		'Option 3',
-		'Option 4',
-		'Option 5',
-		'Italian',
-		'Vegetarian',
-		'Seafood'
-	];
-
 	const dispatch = createEventDispatcher();
-
-	// @ts-ignore
-	function handleCategoryInputChange(event) {
-    	categorySearchQuery = event.target.value;
-  	}
-
-	// @ts-ignore
-	function selectCategoryOption(option) {
-		if (!selectedCategories.includes(option)) {
-		selectedCategories = [...selectedCategories, option];
-		}
-		categorySearchQuery = '';
-		dispatch('optionSelected', option);
-	}
-
-	// @ts-ignore
-	function removeCategoryOption(option) {
-		selectedCategories = selectedCategories.filter((selectedOption) => selectedOption !== option);
-	}
-
-	// @ts-ignore
-	function handleCategorySelection(event) {
-		const selectedValue = event.target.value;
-		if (selectedValue && !selectedCategories.includes(selectedValue) && categoryOptions.includes(selectedValue)) {
-			selectCategoryOption(selectedValue);
-		}
-	}
 
 	// @ts-ignore
 	function handleIngredientInputChange(event) {
@@ -194,53 +155,8 @@
 			{/each}
 		</div>
 	</div>
-							
-							
-	<div class="categories-input mt-8">
-		<label for="categories" class="block mb-2">Categories</label>
 
-		<select id="categories" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4"
-			bind:value={categorySearchQuery}
-			on:change={handleCategorySelection}
-			on:click={() => categorySearchQuery = ""}
-			placeholder="Search Categories...">
-				<option value="" disabled hidden>Select a category</option>
-				{#each categoryOptions as option}
-					{#if option.toLowerCase().includes(categorySearchQuery.toLowerCase())}
-						<option value={option}>{option}</option>
-					{/if}
-				{/each}
-		</select>
-
-		<!-- <input type="text" id="categories" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4" 
-				bind:value={categorySearchQuery} 
-				on:input={handleCategoryInputChange} 
-				on:change={handleCategorySelection} 
-				placeholder="Search Categories..." 
-				list="category-options" />
-
-	  
-		<datalist id="category-options">
-			{#each categoryOptions as option}
-				{#if option.toLowerCase().includes(categorySearchQuery.toLowerCase())}
-				<option value={option} />
-				{/if}
-			{/each}
-		</datalist> -->
-		
-		<div class="flex justify-start items-center flex-wrap w-[435px] pt-2 gap-y-2 gap-x-2">
-			{#each selectedCategories as option}
-			<div class="border-black/10 border bg-gray-100 max-w-[435px] w-fit rounded-md py-2 px-4 flex justify-start items-center">
-				<p class="">{option}</p>
-				<button class="ml-2 text-red-400 hover:text-red-500" on:click={() => removeCategoryOption(option)}>
-					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-					  </svg>
-				</button>
-			  </div>
-			{/each}
-		</div>
-	</div>
+	<AddRecipeCategory />
 
     <div class="w-full h-11 flex justify-start items-center mt-6 mb-4">
         <button class="w-full h-full bg-[#121212] text-white rounded-md text-center">
