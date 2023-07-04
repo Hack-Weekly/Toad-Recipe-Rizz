@@ -14,7 +14,9 @@
         const response = await fetch('/recipes');
         recipes = await response.json();
         console.log(recipes)
-    }); */
+    }); */ 
+    const all_recipes = data.recipeData
+    console.log(all_recipes)
 </script>  
 
 <section class="center w-full h-screen relative flex justify-start items-center flex-col">
@@ -23,7 +25,9 @@
     <ProfileHeader />
 
     <div class="overflow-y-auto mb-6">
-        <ShortRecipe  />
+        {#each all_recipes as recipe}
+            <ShortRecipe recipe={recipe} />
+        {/each}
         <!-- <Communities  /> -->
     </div>
 

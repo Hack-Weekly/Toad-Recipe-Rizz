@@ -1,6 +1,8 @@
 <script lang="ts">
     // @ts-ignore
     import Community from '$lib/community.svelte';
+    import FollowedCommunity from '$lib/followed_community.svelte';
+    import CommunityCard from '$lib/community_card.svelte';
     import ProfileHeader from '$lib/profileHeader.svelte';
     import { page } from '$app/stores';
     import { enhance } from '$app/forms';
@@ -13,40 +15,47 @@
 
     <ProfileHeader />
 
-    <div class="min-h-[64px] w-full border-b border-gray-300 h-16 flex justify-between items-center px-4">
-        <div class="flex justify-start items-center gap-x-2 text-xs">
-            <div class="flex justify-start items-start flex-col">
-                <h1 class="text-xl font-semibold"> Followed Communities </h1>
+    <div class="w-full border-gray-300 flex justify-between items-end px-4 pt-10">
+        <div class="flex justify-start items-center gap-x-2 text-xs font-semibold">
+            <div class="flex gap-x-2">
+                <h1 class="text-xl"> Followed Communities </h1> 
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>                
             </div>
         </div>
     </div>
 
 
-    <div class="communities-list max-w-[725px] p-8 border-b w-full h-full flex justify-start items-center px-6 overflow-y-hidden overflow-x-auto gap-x-8 border-gray-300 min-h-[350px]">
-
-
-        <Community />
-        <Community />
-        <Community />
-        <Community />
-
+    <div class="communities-list max-w-[725px] border-b w-full h-96 flex justify-center items-start px-4 overflow-y-hidden border-gray-300 min-h-[200px]">
+        <div class="overflow-auto communities-list pt-6 flex justify-start items-start w-full gap-x-6">
+            <FollowedCommunity />
+            <FollowedCommunity />
+            <FollowedCommunity />
+            <FollowedCommunity />
+        </div>
     </div>
 
-    <div class="min-h-[64px] w-full border-b border-gray-300 h-16 flex justify-between items-center px-4">
-        <div class="flex justify-start items-center gap-x-2 text-xs">
-            <div class="flex justify-start items-start flex-col">
-                <h1 class="text-xl font-semibold"> All Categories </h1>
+    <div class="w-full border-gray-300 flex justify-between items-end px-4 pt-10">
+        <div class="flex justify-start items-center gap-x-2 text-xs font-semibold">
+            <div class="flex gap-x-2">
+                <h1 class="text-xl"> Discover New Communities </h1> 
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>                
             </div>
         </div>
     </div>
 
-    <div class="communities-list max-w-[725px] p-8 border-b w-full flex flex-wrap justify-evenly items-center px-2 gap-x-2 gap-y-6 border-gray-300">
 
-    
-        <Community />
-        <Community />
-        <Community />
-        <Community />
+    <div class="communities-list max-w-[725px] border-b pb-4 w-full h-full flex justify-center items-start px-4 border-gray-300">
+
+        <div class="communities-list pt-6 flex justify-start flex-wrap items-start w-full gap-6">
+            <CommunityCard />
+            <CommunityCard />
+            <CommunityCard />
+            <CommunityCard />
+        </div>
 
     </div>
 
