@@ -2,39 +2,56 @@ import type { PageServerLoad } from "./$types";
 import { client } from "$lib/server/lucia";
 import { getRecipe } from "../../../../prismaQueries";
 
-export const load: PageServerLoad = async ({ params, parent }) => {
-    const recipe = await getRecipe(params.slug)
-
+export const load: PageServerLoad = async ({ params, locals }) => {
+    const { recipe } = await getRecipe(params.slug)
+    const { session } = await locals.auth.validateUser()
     if (recipe) {
         const recipeCreator = await client.recipe.findUnique({
             where: {
                 id: recipe.id,
             },
             select: {
-                name: true
+                name: true,
+                user: true,
+                Recipe_Category: true,
             }
         })
 
-        if (recipe.user_id === (await parent()).userId) {
-            return {
-                recipeCanBeUpdated: true,
-                slug: recipe.slug,
-                recipe_creator: recipeCreator?.name, 
-                recipe_name: recipe.name,
-                description: recipe.description,
-                ingredient: recipe.ingredients,
-                instructions: recipe.instructions,
+        const categoryNames = await client.category.findMany({
+            where: {
+                category_id: {
+                    in: recipeCreator?.Recipe_Category.map(r => r.category_id)
                 }
-        }
-    // returns if the conditional is false
-        return {
-            recipeCanBeUpdated: false,
-            recipe_creator: recipeCreator?.name,
+            },
+            select: {
+                name: true,
+            }
+        })
+
+        console.log(categoryNames)
+        const data = {
+            recipe: {
+            recipeCanBeUpdated: true,
+            slug: recipe.slug,
+            recipe_creator: recipeCreator?.user.username,
             recipe_name: recipe.name,
+            cook_time: recipe.cook_time,
             description: recipe.description,
-            ingredient: recipe.ingredients,
+            ingredients: recipe.ingredients,
             instructions: recipe.instructions,
+            recipe_categories: categoryNames
         }
+    }
+
+        console.log(session?.userId, params.slug, recipe)
+        if (recipe.user_id === session?.userId) {
+            return data
+        }
+
+
+    // returns if the conditional is false
+        data.recipe.recipeCanBeUpdated = false
+        return data
     }
 }
 

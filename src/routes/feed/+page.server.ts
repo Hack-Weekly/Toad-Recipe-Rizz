@@ -16,7 +16,7 @@ export const load: PageServerLoad = async ({ locals }) => {
     })
 
     const categoryIds = loadUserCategories.map((userCategory) => userCategory.category.category_id);
-    
+
     const getRecipes = await client.recipe_Category.findMany({
         where: {
             category_id: {
@@ -25,8 +25,15 @@ export const load: PageServerLoad = async ({ locals }) => {
         },
         select: {
             recipe: true,
+            category_id: true,
         }
     })
 
+    if (getRecipes.length > 0) {
         return { getRecipes }
+    } else {
+        const allRecipes = await client.recipe.findMany({})
+
+        return { allRecipes } 
+    }
 }

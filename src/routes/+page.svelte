@@ -2,19 +2,8 @@
     // @ts-ignore
     import ShortRecipe from '$lib/shortRecipe.svelte';
     import ProfileHeader from '$lib/profileHeader.svelte';
-    import { page } from '$app/stores';
-    import { enhance } from '$app/forms';
-    import { onMount } from 'svelte';
-    
     let recipes = [];
     export let data
-    // WTF IS THIS??
- /* onMount(async () => {
-        // use the proxy endpoint
-        const response = await fetch('/recipes');
-        recipes = await response.json();
-        console.log(recipes)
-    }); */ 
     const all_recipes = data.recipeData
     console.log(all_recipes)
 </script>  

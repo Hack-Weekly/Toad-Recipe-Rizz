@@ -1,40 +1,16 @@
 <script lang="ts">
     import { onMount } from "svelte";
 
-    export let recipe: any;
+  export let recipe: any;
 
-    console.log(recipe)
-
-    let data;
-
-    async function sendData() {
-        const categories = recipe?.categories;
-        const response = await fetch('/search', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ categories })
-        });
-        
-        data = await response.json();
-
-        
-        return data
-  }
-
-//   export let name, cook_time, created_at, description: any
-
-  onMount( async () => {
-    // sendData()
-  })
-
+  const picture = `https://recipes.eerieemu.com${recipe.image_path}` || `${recipe.picture}`
+  const anchorToRecipe = `/recipes/view/${recipe.slug}`
 </script>
 
 <div class="recipe-container w-full p-4 gap-x-4 flex justify-center items-start border-b border-gray-300">
 
     <div class="recipe-img w-28 h-full mt-2">
-        <img src={ 'https://recipes.eerieemu.com' + recipe.picture } alt="recipe-img" class="object-cover w-20 h-20 rounded-md">
+        <img src={ picture } alt="recipe-img" class="object-cover w-20 h-20 rounded-md">
     </div>
 
     <div class="w-full h-full flex-col flex gap-y-3 justify-start items-start">
@@ -53,7 +29,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <p class="text-xs"> { recipe.cook_time } </p>
+                <p class="text-xs"> { recipe.cook_time || recipe.total_time_string } </p>
             </span>
             <!-- <span class="author-of-the-recipe py-1 px-2 rounded border border-gray-200 flex items-center gap-x-1 border-black/10 bg-gray-100">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3">
@@ -85,7 +61,7 @@
         <div class="description flex justify-start text-sm flex-col">
             <p class="[&>a]:text-[#175BCC]"> { @html recipe.description} </p>
             <a href="/" class="flex items-center mt-2 arrow">
-                <a href="/recipe/view/pineapple-ham-pizza"> <span class="text-[#175BCC] underline"> View recipe</span> </a> 
+                <a href={anchorToRecipe}><span class="text-[#175BCC] underline"> View recipe</span></a> 
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#175BCC] mt-0.5" viewBox="0 0 24 24" stroke-width="1.5" stroke="#175BCC" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                     <path d="M9 6l6 6l-6 6" />

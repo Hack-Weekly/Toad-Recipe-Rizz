@@ -1,16 +1,17 @@
-<script>
-
+<script lang="ts">
     import Recipe from '$lib/recipe.svelte';
     import ProfileHeader from '$lib/profileHeader.svelte';
+    export let data;
 
+    console.log(data)
 </script>  
 
 <section class="center w-full h-screen relative flex justify-start items-center flex-col">
 
     <ProfileHeader />
-    
+ 
     <div class="overflow-y-auto mb-6">
-        <Recipe  />
+        <Recipe recipeData={data.recipe}/>
     </div>
 
     <div class="search w-full p-4 border-t border-gray-300 hidden max-xl:block">

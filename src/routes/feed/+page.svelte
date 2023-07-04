@@ -13,7 +13,7 @@
     <ProfileHeader />
     
     <div class="overflow-y-auto mb-6">
-            <ShortRecipe />   
+        <ShortRecipe recipe={recipeData} />   
     </div>
 
     <div class="search w-full p-4 border-t border-gray-300 hidden max-xl:block">
