@@ -11,8 +11,6 @@ export const GET: RequestHandler = async ({ params, locals }) => {
             slug: params.slug,
         }
     })
-    console.log("ASDASDASD")
-
     const user = await client.authUser.findUnique({ where: { id: session.userId }, select: { username: true } })
 
     console.log(`Recipe ${params.slug} Removed!`)

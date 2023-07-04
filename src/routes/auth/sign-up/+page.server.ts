@@ -56,13 +56,13 @@ export const actions: Actions = {
 
           const user =  await auth.createUser({
               primaryKey: {
-                  providerId: 'username',
+                  providerId: "username",
                   providerUserId: username, password
               },
               attributes: {
                   username,
                   email,
-                  picture
+                  picture,
               }
             })
 

@@ -1,6 +1,6 @@
 import type { PageServerLoad } from "./$types";
 import { client } from "$lib/server/lucia";
-import { getRecipe } from "../../../prismaQueries";
+import { getRecipe } from "../../../../prismaQueries";
 
 export const load: PageServerLoad = async ({ params, parent }) => {
     const recipe = await getRecipe(params.slug)

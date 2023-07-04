@@ -1,3 +1,7 @@
+<script lang="ts">
+    export let arrOfIngredients: string[]
+</script>
+
 <div class="recipe-container w-full p-4 gap-x-4 flex justify-center items-start border-b border-gray-300">
 
     <div class="recipe-img w-28 h-full mt-2">
@@ -65,13 +69,9 @@
         </span>
 
         <div class="instructions flex justify-start text-sm flex-col">
-            ・Olive oil <br>
-            ・1 (8- to 10-ounce) ball store-bought pizza dough, room temperature <br>
-            ・1/2 cup Marcella Hazan’s tomato sauce or other pizza sauce <br>
-            ・1 cup shredded low-moisture mozzarella cheese <br>
-            ・1/2 cup cubed ham (about 1/2 inch) <br>
-            ・1/2 cup fresh pineapple chunks (about 1/2 inch) <br> 
-            ・Red-pepper flakes, for sprinkling <br>
+            {#each arrOfIngredients as ingredient}
+                ・{ingredient}<br>
+            {/each}
         </div>
 
     </div>

@@ -1,9 +1,30 @@
 <script>
+  // why arent we using the public folder for static assets?
+	// import defaultPic from '$lib/assets/defaultPic.png';
+  import { enhance } from '$app/forms';
+  import { page } from '$app/stores';
+	let profilePic = $page.data.picture;
+	// @ts-ignore
+	function handleFileInputChange(event) {
+		const file = event.target.files[0];
+  		if (file) {
+			const reader = new FileReader();
+			reader.onload = () => {
+				const result = reader.result;
+				if (typeof result === 'string') {
+					profilePic = result;
+				} else {
+					profilePic = $page.data.picture;
+				}
+			};
+			reader.readAsDataURL(file);
+  		}
+	}
 	
     import { enhance } from '$app/forms';
-	import DisplayPic from './utils/displayPic.svelte';
+	  import DisplayPic from './utils/displayPic.svelte';
 
-	let passwordHidden = true;
+	  let passwordHidden = true;
 
 	function togglePassword() {
 		passwordHidden = !passwordHidden;

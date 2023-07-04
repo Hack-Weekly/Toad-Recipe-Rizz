@@ -1,3 +1,7 @@
+<script lang="ts">
+    export let name, cook_time, created_at, description: any
+</script>
+
 <div class="recipe-container w-full p-4 gap-x-4 flex justify-center items-start border-b border-gray-300">
 
     <div class="recipe-img w-28 h-full mt-2">
@@ -19,8 +23,8 @@
             <span class="recipe-time py-1 px-2 rounded border border-gray-200 flex items-center gap-x-1 border-black/10 bg-gray-100">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <p class="text-xs"> 35 minutes </p>
+                </svg> 
+                <p class="text-xs"> {cook_time} </p>
             </span>
             <span class="author-of-the-recipe py-1 px-2 rounded border border-gray-200 flex items-center gap-x-1 border-black/10 bg-gray-100">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3">

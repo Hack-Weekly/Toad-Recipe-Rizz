@@ -24,7 +24,7 @@
 
     <div class="communities-list max-w-[725px] p-8 border-b w-full h-full flex justify-start items-center px-6 overflow-y-hidden overflow-x-auto gap-x-8 border-gray-300 min-h-[350px]">
 
-    
+
         <Community />
         <Community />
         <Community />
