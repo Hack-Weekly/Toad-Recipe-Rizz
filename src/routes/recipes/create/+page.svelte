@@ -4,7 +4,6 @@
     import { enhance } from '$app/forms';
 	  let profilePic = defaultPic;
     export let data;
-    console.log(data)
 	// @ts-ignore
 	function handleFileInputChange(event) {
 		const file = event.target.files[0];

@@ -1,7 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
 
-
     export let recipe: any;
 
     console.log(recipe)
@@ -23,6 +22,8 @@
         
         return data
   }
+
+//   export let name, cook_time, created_at, description: any
 
   onMount( async () => {
     // sendData()

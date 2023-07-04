@@ -28,14 +28,12 @@
 
 
     <div class="communities-list max-w-[725px] border-b w-full h-96 flex justify-center items-start px-4 overflow-y-hidden border-gray-300 min-h-[200px]">
-
         <div class="overflow-auto communities-list pt-6 flex justify-start items-start w-full gap-x-6">
             <FollowedCommunity />
             <FollowedCommunity />
             <FollowedCommunity />
             <FollowedCommunity />
         </div>
-
     </div>
 
     <div class="w-full border-gray-300 flex justify-between items-end px-4 pt-10">

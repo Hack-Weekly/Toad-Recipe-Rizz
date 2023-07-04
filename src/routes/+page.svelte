@@ -5,7 +5,7 @@
     import { page } from '$app/stores';
     import { enhance } from '$app/forms';
     import { onMount } from 'svelte';
-
+    
     let recipes = [];
     export let data
     // WTF IS THIS??
@@ -14,7 +14,7 @@
         const response = await fetch('/recipes');
         recipes = await response.json();
         console.log(recipes)
-    }); */
+    }); */ 
     const all_recipes = data.recipeData
     console.log(all_recipes)
 </script>  
@@ -23,7 +23,7 @@
 
 
     <ProfileHeader />
-    
+
     <div class="overflow-y-auto mb-6">
         {#each all_recipes as recipe}
             <ShortRecipe recipe={recipe} />
