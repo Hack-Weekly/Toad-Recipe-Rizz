@@ -18,22 +18,6 @@ export const load: PageServerLoad = async ({ locals }) => {
     })
 
     return { categories }
-    // DONT DELETE !!!
- /* const response = await fetch("https://recipes.eerieemu.com/api/category/?format=json")
-    console.log(response)
-    const categoriesData = await response.json()
-
-    for (const category of categoriesData) {
-        await client.category.create({
-            data: {
-                id: String(category.id),
-                category_id: category.id,
-                name: category.name,
-            }
-        })
-
-        console.log(category)
-    } */
 }
 
 // Wrap Inner Logic In Try/Catch Later.
@@ -63,21 +47,22 @@ export const actions: Actions = {
         const ingredientArr = ingredients.split(",")
         const ingredientsObj = { "ingredients": ingredientArr }
         const categoriesArr = categories.split(",")
-        
+
         console.log(categoriesArr)
-        let categoriesIdArr: number[]
+        const categoriesIdArr: any [] = []
         for (const categoryName of categoriesArr) {
-          const category =  await client.category.findFirst({
+          const category = await client.category.findFirst({
                 where: {
                     name: categoryName,
                 },
                 select: {
-                    id: true,
+                    category_id: true,
                 }
             })
 
-            categoriesIdArr.push(category?.id)
+            categoriesIdArr.push(category?.category_id)
             }
+        console.log(categoriesIdArr)
         if (recipeThumbnail) {
         const con = cloudinary.config({
             cloud_name: VITE_CLOUDINARY_CLOUD_NAME,
@@ -111,13 +96,32 @@ export const actions: Actions = {
                     instructions: { instructions: instructions },
                     cook_time: cookTime,
                     slug: recipeSlug,
-                    picture: result?.secure_url,
+                    picture: result?.secure_url || "",
                 }
             })
-        }).end(buffer)
 
+        // I know its fucking scuffed please forgive lord of code :(
+        const selectRecipe = await client.recipe.findFirst({
+              where: {
+                slug: recipeSlug,
+              },
+              select: {
+                id: true,
+                name: true,
+              },
+          })
+    console.log(selectRecipe, recipeSlug)
+    for (const categoryId of categoriesIdArr) {
+      const createRecipeCategory = await client.recipe_Category.create({
+        data: {
+            category_id: categoryId,
+            recipe_id: selectRecipe?.id || "1111111",
+        },
+      })
+    }
+     console.log(selectRecipe, recipeSlug)
 
-
+        }).end(buffer) 
         console.log(`${recipeName} Created!`)
     }
 }}

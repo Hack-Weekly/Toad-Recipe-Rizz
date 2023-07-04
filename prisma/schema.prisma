@@ -78,18 +78,18 @@ model Recipe {
 }
 
 model User_Category {
-  id          String      @id @unique
+  id          String      @id @default(cuid())
   user_id     String
-  category_id String
+  category_id Int @unique
   user        AuthUser @relation(references: [id], fields: [user_id], onDelete: Cascade, onUpdate: Cascade)
-  category    Category @relation(fields: [category_id], references: [id])
+  category    Category @relation(fields: [category_id], references: [category_id])
   @@index([user_id])
   @@index([category_id])
 }
 
 model Category {
-  id              String               @id @unique
-  category_id     Int?
+  id              String               @id @default(cuid())
+  category_id     Int @unique 
   name            String
   created_at      DateTime          @default(now())
   updated_at      DateTime          @updatedAt
@@ -100,11 +100,11 @@ model Category {
 }
 
 model Recipe_Category {
-  id          String      @id @unique
+  id          String      @id @default(cuid())
   recipe_id   String
-  category_id String
-  recipe      Recipe   @relation(references: [id], fields: [id])
-  category    Category @relation(fields: [category_id], references: [id])
+  category_id Int @unique
+  recipe      Recipe   @relation(references: [id], fields: [recipe_id])
+  category    Category @relation(fields: [category_id], references: [category_id])
 
   @@index([recipe_id])
   @@index([category_id])

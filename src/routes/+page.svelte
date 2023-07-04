@@ -5,7 +5,7 @@
     import { page } from '$app/stores';
     import { enhance } from '$app/forms';
     import { onMount } from 'svelte';
-
+    
     let recipes = [];
     export let data
     // WTF IS THIS??
@@ -15,8 +15,6 @@
         recipes = await response.json();
         console.log(recipes)
     }); */
-
-    console.log(data)
 </script>  
 
 <section class="center w-full h-screen relative flex justify-start items-center flex-col">
