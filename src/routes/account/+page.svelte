@@ -73,7 +73,7 @@
              </div>
          </div>
      </div>
-     {JSON.stringify(form)}
+     
      {#if form?.message}
         <div role="alert" class="{form.message == "Updated successfully" ? "border-green-600 bg-green-50" : "border-red-500 bg-red-50"} rounded border-s-4 p-4 mt-2">
             <strong class="{form.message == "Updated successfully" ? "text-green-700" : "text-red-800" } block font-medium">{form.message == "Updated successfully" ? "Success" : "Something went wrong"}</strong>
