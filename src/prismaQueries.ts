@@ -1,7 +1,7 @@
 import { auth, client } from "$lib/server/lucia";
 
 export async function getRecipe (val: string) {
-    return await client.recipe.findUnique({
+    const recipe = await client.recipe.findUnique({
         where: {
             slug: val,
         },
@@ -19,6 +19,8 @@ export async function getRecipe (val: string) {
         }
 
     })
+
+    return { recipe }
 }
 
 // I know 6 params is a lot but it does everything we need
@@ -46,10 +48,25 @@ export async function changeUsernameAndPassword (name: string, email: string, pa
         })
         console.log("USER ATTRIBUTES CHANGED:", name, email, password)
         if (password.length === 0) return
-        await auth.updateKeyPassword("username", user.username, null)
+        await auth.updateKeyPassword("username", user.username, password)
         console.log(user.username)
         console.log("USER PASSWORD CHANGED!")
     } catch (err) {
         console.log("ERROR CHANGING USERNAME OR PASSWORD:", err)
     }
+}
+
+export async function getRecipeCategoryIdsValues (arr: any) {
+    const categoryNames = await client.category.findMany({
+        where: {
+            category_id: {
+                in: arr.map(r => r.category_id),
+            }
+        },
+        select: {
+            name: true,
+        }
+    })
+
+    return categoryNames
 }

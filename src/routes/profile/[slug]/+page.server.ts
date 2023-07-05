@@ -19,6 +19,7 @@ export const load: PageServerLoad = async ({ params, parent, locals }) => {
         })
         console.log(getUserProfile)
         if(getUserProfile?.id) {
+
             const getUserInfo = await client.authUser.findUnique({
                 where: {
                     id: getUserProfile?.id,
@@ -28,6 +29,7 @@ export const load: PageServerLoad = async ({ params, parent, locals }) => {
                     picture: true,
                 }
             })
+
             const userRecipes = await client.recipe.findMany({
                 where: {
                     user_id: getUserProfile?.id
@@ -61,7 +63,7 @@ export const load: PageServerLoad = async ({ params, parent, locals }) => {
                     }
                 })
             }
-        
+
         return {
             profile: {
                 name: getUserProfile?.name,
@@ -73,10 +75,10 @@ export const load: PageServerLoad = async ({ params, parent, locals }) => {
             },
             recipes: userRecipes,
             categories: categories
-        }   
+        }
     } else {
         throw error(404, { message: "User not found" })
-    }       
+    }
     } catch (err) {
         console.log(err)
         throw error(400, { message: "Request Failed!" })
@@ -112,7 +114,7 @@ export const actions: Actions = {
                         name: name
                     }
                 })
-                
+
                 console.log("SUCCESFULLY UPDATED USER AND PROFILE")
             } catch (err) {
                 console.log(err)

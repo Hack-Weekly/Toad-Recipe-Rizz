@@ -5,13 +5,13 @@ export const load: LayoutServerLoad = async ({ locals }) => {
     const { session } = await locals.auth.validateUser()
     if (session) {
       const user = await auth.getUser(session.userId)
-    //   console.log(user)
         return {
             userIsLoggedIn: true,
             userId: user.id,
             username: user.username,
             email: user.email,
-            picture: user.picture
+            picture: user.picture,
+            user: user
         }
     }
 }
