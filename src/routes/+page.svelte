@@ -5,7 +5,6 @@
     let recipes = [];
     export let data
     const all_recipes = data.recipeData
-    console.log(all_recipes)
 </script>  
 
 <section class="center w-full h-screen relative flex justify-start items-center flex-col">

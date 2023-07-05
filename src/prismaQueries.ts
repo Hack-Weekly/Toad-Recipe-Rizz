@@ -55,3 +55,18 @@ export async function changeUsernameAndPassword (name: string, email: string, pa
         console.log("ERROR CHANGING USERNAME OR PASSWORD:", err)
     }
 }
+
+export async function getRecipeCategoryIdsValues (arr: any) {
+    const categoryNames = await client.category.findMany({
+        where: {
+            category_id: {
+                in: arr.map(r => r.category_id),
+            }
+        },
+        select: {
+            name: true,
+        }
+    })
+
+    return categoryNames
+}

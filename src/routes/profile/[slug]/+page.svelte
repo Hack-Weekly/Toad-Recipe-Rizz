@@ -13,7 +13,7 @@
 
 <section class="center w-full h-screen relative flex justify-start items-center flex-col">
     <ProfileHeader/>
-    <UserProfilePageHeader data={data}/>
+    <UserProfilePageHeader {data}/>
 
     <div class="overflow-y-auto mt-24 border-t border-gray-300">
             <ShortRecipe  />

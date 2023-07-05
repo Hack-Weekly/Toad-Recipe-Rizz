@@ -11,7 +11,7 @@
     <ProfileHeader />
  
     <div class="overflow-y-auto mb-6">
-        <Recipe recipeData={data.recipe}/>
+        <Recipe recipe={data.recipe}/>
     </div>
 
     <div class="search w-full p-4 border-t border-gray-300 hidden max-xl:block">

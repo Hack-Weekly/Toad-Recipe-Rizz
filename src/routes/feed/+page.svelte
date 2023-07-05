@@ -13,7 +13,9 @@
     <ProfileHeader />
     
     <div class="overflow-y-auto mb-6">
-        <ShortRecipe recipe={recipeData} />   
+        {#each recipeData as { category_id, recipe }}
+            <ShortRecipe {recipe} {category_id} />
+        {/each}
     </div>
 
     <div class="search w-full p-4 border-t border-gray-300 hidden max-xl:block">

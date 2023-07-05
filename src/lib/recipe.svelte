@@ -1,13 +1,14 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
-    export let recipeData: any
-    const { recipe_name, recipe_creator, recipe_categories, cook_time, description, instructions, ingredients } = recipeData
+    export let recipe: any
+    const picture = `https://recipes.eerieemu.com${recipe.picture}` || `${recipe.picture}`
+    const { recipe_name, recipe_creator, recipe_categories, cook_time, description, instructions, ingredients } = recipe
 </script>
 
 <div class="recipe-container w-full p-4 gap-x-4 flex justify-center items-start border-b border-gray-300">
 
     <div class="recipe-img w-28 h-full mt-2">
-        <img src="https://recipes.eerieemu.com/static/recipes/1024065-pineapple-ham-pizza.jpg" alt="recipe-img" class="object-cover w-20 h-20 rounded-md">
+        <img src={picture} alt="recipe-img" class="object-cover w-20 h-20 rounded-md">
     </div>
 
     <div class="w-full h-full flex-col flex gap-y-3 justify-start items-start">
@@ -56,7 +57,7 @@
         </span>
 
         <div class="instructions flex justify-start text-sm flex-col">
-            {instructions.instructions}
+            {instructions.instructions || instructions}
         </div>
 
         <span class="ingredients-label py-1 px-2 rounded border border-gray-200 flex items-center gap-x-1 border-black/10 bg-[#DEE9FE]">                                       
@@ -64,11 +65,19 @@
         </span>
 
         <div class="instructions flex justify-start text-sm flex-col">
-            <ul>
-               {#each Object.keys(ingredients.ingredients) as ingredient}
+            {#if recipe.categoryNamesTrue !== false}
+                <ul>
+                {#each Object.keys(ingredients.ingredients) as ingredient}
                     <li>{ingredients.ingredients[ingredient]}</li>
-               {/each}
-            </ul>
+                {/each}
+                </ul>
+            {:else}
+                <ul>
+                    {#each ingredients as ingredient}
+                        <li>{ingredient}</li>
+                    {/each}
+                </ul>
+            {/if}
         </div>
 
     </div>

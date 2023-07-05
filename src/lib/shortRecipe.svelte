@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { onMount } from "svelte";
-
   export let recipe: any;
-
+  export let category_id: any
   const picture = `https://recipes.eerieemu.com${recipe.image_path}` || `${recipe.picture}`
   const anchorToRecipe = `/recipes/view/${recipe.slug}`
+
+  console.log(recipe.picture)
 </script>
 
 <div class="recipe-container w-full p-4 gap-x-4 flex justify-center items-start border-b border-gray-300">
