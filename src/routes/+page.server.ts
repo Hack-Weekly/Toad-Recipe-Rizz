@@ -24,4 +24,5 @@ export const load: PageServerLoad = async ({ locals, fetch }) => {
     } else {
       return { recipeData }
     }
+
 } 

@@ -42,12 +42,12 @@
 
     <div class="username-input w-full mt-4">
         <label for="username" class="block mb-2">Username</label>
-        <input type="text" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4" placeholder="shaniayanofc">
+        <input type="text" name="username" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4" placeholder="shaniayanofc">
     </div>
 
     <div class="email-input mt-4">
         <label for="email" class="block mb-2">Email</label>
-        <input type="text" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4" placeholder="shaniayanofc@email.com">
+        <input type="text" name="email" class="w-full h-11 rounded-md border outline-none border-black/10 bg-gray-100 px-4" placeholder="shaniayanofc@email.com">
     </div>
 
     <div class="password-input mt-4">

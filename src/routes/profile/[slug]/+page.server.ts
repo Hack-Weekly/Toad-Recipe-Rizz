@@ -17,8 +17,18 @@ export const load: PageServerLoad = async ({ params, parent, locals }) => {
                 id: true,
             }
         })
-
+        console.log(getUserProfile)
         if(getUserProfile?.id) {
+
+            const getUserInfo = await client.authUser.findUnique({
+                where: {
+                    id: getUserProfile?.id,
+                },
+                select: {
+                    username: true,
+                    picture: true,
+                }
+            })
 
             const userRecipes = await client.recipe.findMany({
                 where: {
@@ -57,8 +67,11 @@ export const load: PageServerLoad = async ({ params, parent, locals }) => {
         return {
             profile: {
                 name: getUserProfile?.name,
+                username: getUserInfo?.username,
                 slug: getUserProfile?.slug,
+                picture: getUserInfo?.picture,
                 created_at: getUserProfile?.created_at,
+                
             },
             recipes: userRecipes,
             categories: categories
