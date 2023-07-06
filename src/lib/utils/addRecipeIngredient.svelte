@@ -3,7 +3,7 @@
     import { createEventDispatcher } from 'svelte';
 
     let ingredientSearchQuery = '';
-	let selectedIngredients: any[] = [];
+	export let selectedIngredients: any[] = [];
 
 	const dispatch = createEventDispatcher();
 
@@ -68,7 +68,7 @@
 		{#each selectedIngredients as option}
 		<div class="border-black/10 border bg-gray-100 max-w-[435px] w-fit rounded-md py-2 px-4 flex justify-start items-center">
 			<p class="">{option}</p>
-			<button class="ml-2 text-red-400 hover:text-red-500" on:click={() => removeIngredientOption(option)}>
+			<button type="button" class="ml-2 text-red-400 hover:text-red-500" on:click={() => removeIngredientOption(option)}>
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
 					<path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
 				</svg>

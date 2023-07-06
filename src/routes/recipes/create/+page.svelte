@@ -7,6 +7,9 @@
     import DisplayPic from '$lib/utils/displayPic.svelte';
 	export let data;
 
+	let selectedCategories: any[] = [];
+	let selectedIngredients: any[] = [];
+
     let form: HTMLFormElement;
 
     onMount(() => {
@@ -20,6 +23,12 @@
       }
     }
 
+	// @ts-ignore
+	function handleFormSubmit(event) {
+		selectedIngredients = [];
+		selectedCategories = [];
+	}
+
   </script>
 
 
@@ -28,7 +37,7 @@
     <!-- <div class="profile-label px-4 py-2 mt-4">
         <p class="text-black text-xl w-160 h-50">Add Recipe</p>
     </div> -->
-    <form method="POST" use:enhance bind:this={form}>
+    <form method="POST" use:enhance bind:this={form} on:submit={handleFormSubmit}>
     
 		<DisplayPic />
 
@@ -73,9 +82,11 @@
 		</div>
 
 	
-		<AddRecipeIngredient />
-		
-		<AddRecipeCategory />
+		<AddRecipeIngredient bind:selectedIngredients />
+		<textarea name="ingredients" value={selectedIngredients} class="hidden"></textarea>
+
+		<AddRecipeCategory bind:selectedCategories />
+		<textarea value={selectedCategories} name="categories" class="hidden"/>
 							
 
 		<div class="w-full h-11 flex justify-start items-center mt-6 mb-4">

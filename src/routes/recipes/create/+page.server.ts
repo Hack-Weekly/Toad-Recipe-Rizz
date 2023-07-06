@@ -47,7 +47,7 @@ export const actions: Actions = {
         for (const categoryName of categoriesArr) {
           const category = await client.category.findFirst({
                 where: {
-                    name: categoryName,
+                    name: categoryName.trim(),
                 },
                 select: {
                     category_id: true,
