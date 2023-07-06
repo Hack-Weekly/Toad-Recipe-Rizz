@@ -6,17 +6,17 @@ import { client } from "$lib/server/lucia";
 export const load: PageServerLoad = async ({ params, parent }) => {
    const recipe = await getRecipe(params.slug)
    const userId = (await parent()).userId
-   if (userId !== recipe?.user_id || !userId) throw redirect(302, "http://localhost:5173/auth/sign-in")
+   if (userId !== recipe.recipe?.user_id || !userId) throw redirect(302, "http://localhost:5173/auth/sign-in")
 
    if (recipe) {
         return {
-            recipeName: recipe.name,
-            description: recipe.description,
-            ingredient: recipe.ingredients,
-            instructions: recipe.instructions,
-            cookTime: recipe.cook_time,
-            craeted: recipe.created_at,
-            update: recipe.updated_at
+            recipeName: recipe.recipe?.name,
+            description: recipe.recipe?.description,
+            ingredient: recipe.recipe?.ingredients,
+            instructions: recipe.recipe?.instructions,
+            cookTime: recipe.recipe?.cook_time,
+            craeted: recipe.recipe?.created_at,
+            update: recipe.recipe?.updated_at
         }
    }
 }

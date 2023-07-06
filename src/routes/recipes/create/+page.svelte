@@ -207,7 +207,7 @@
 
 	  
 		<datalist id="category-options">
-        {#each categoryOptions as { name }}
+      {#each categoryOptions as { name }}
 				{#if name.toLowerCase().includes(categorySearchQuery.toLowerCase())}
 				<option value={name} />
 				{/if}

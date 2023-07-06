@@ -65,7 +65,7 @@ model Recipe {
   user_id String
   name            String
   slug            String @unique
-  description     String
+  description     String @db.Text
   ingredients     Json
   instructions    Json
   cook_time       String
@@ -80,7 +80,7 @@ model Recipe {
 model User_Category {
   id          String      @id @default(cuid())
   user_id     String
-  category_id Int @unique
+  category_id Int
   user        AuthUser @relation(references: [id], fields: [user_id], onDelete: Cascade, onUpdate: Cascade)
   category    Category @relation(fields: [category_id], references: [category_id])
   @@index([user_id])

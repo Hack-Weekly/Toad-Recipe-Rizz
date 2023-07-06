@@ -1,60 +1,24 @@
 import { error, fail } from "@sveltejs/kit"
 import type { PageServerLoad, Actions } from "./$types"
 import { client } from "$lib/server/lucia"
+import { getUserInfo, getUserProfile } from "../../../prismaQuerys/auth/user"
+
 /* Possible Spaghetti That Fulffils Its Purpose, Written With Much Love By: Bionic <3 */
 
-export const load: PageServerLoad = async ({ params, parent, locals }) => {
+export const load: PageServerLoad = async ({ params, locals }) => {
     try {
-        const { session } = await locals.auth.validateUser()
-        const getUserProfile = await client.profile.findFirst({
-            where: {
-                slug: params.slug
-            },
-            select: {
-                name: true,
-                slug: true,
-                created_at: true,
-                id: true,
-            }
-        })
-        console.log(getUserProfile)
-        if(getUserProfile?.id) {
-
-            const getUserInfo = await client.authUser.findUnique({
-                where: {
-                    id: getUserProfile?.id,
-                },
-                select: {
-                    username: true,
-                    picture: true,
-                }
-            })
-
-            const userRecipes = await client.recipe.findMany({
-                where: {
-                    user_id: getUserProfile?.id
-                },
-                select: {
-                    name: true,
-                    slug: true,
-                    created_at: true,
-                    updated_at: true,
-                }
-            })
-            const getJoinedCategories = await client.user_Category.findMany({
-                where: {
-                    user_id: getUserProfile!.id
-                },
-                select: {
-                    category_id: true
-                }
-            })
+        const userProfile = await getUserProfile(params.slug)
+        if(userProfile?.id) {
+            const userInfo = await getUserInfo(userProfile.id)
+            const userRecipes = userInfo?.Recipe
+            const getJoinedCategories = userInfo?.User_Category
             let categories:Array<Object> = []
+
             if(getJoinedCategories) {
                 categories = await client.category.findMany({
                     where: {
-                        id: {
-                            in: getJoinedCategories.map((category) => category.category_id)
+                        category_id: {
+                            in: getJoinedCategories.map((categories) => categories.category.category_id)
                         }
                     },
                     select: {
@@ -66,12 +30,11 @@ export const load: PageServerLoad = async ({ params, parent, locals }) => {
 
         return {
             profile: {
-                name: getUserProfile?.name,
-                username: getUserInfo?.username,
-                slug: getUserProfile?.slug,
-                picture: getUserInfo?.picture,
-                created_at: getUserProfile?.created_at,
-                
+                name: userProfile.name,
+                username: userInfo?.username,
+                slug: userProfile.slug,
+                picture: userInfo?.picture,
+                created_at: userProfile.created_at,
             },
             recipes: userRecipes,
             categories: categories

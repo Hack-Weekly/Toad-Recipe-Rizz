@@ -1,9 +1,10 @@
 <script>
     import { page } from '$app/stores';
+    console.log($page.data)
 </script>
 <div class="communities-list p-8 border-b border-gray-300 flex flex-wrap gap-6">
-    {#if $page.data.categories}
-        {#each $page.data.categories as category }
+    {#if $page.data.userCategories}
+        {#each $page.data.userCategories as category }
         <div class="community w-64 h-72 rounded-md overflow-hidden relative after:absolute after:top-0 after:left-0 after:bg-gradient-to-t after:from-zinc-950/90 after:from-50 after:to-transparent after:to-90% after:w-full after:h-full">
             
             <div class="w-full h-full absolute z-10 flex flex-col justify-between items-center p-4">
@@ -23,7 +24,7 @@
                 <div class="w-full flex justify-center items-center flex-col gap-2">
 
                     <div class="w-full flex justify-start items-center px-2">
-                        <p class="text-white text-2xl">{category.name}</p>
+                        <p class="text-white text-2xl">{category.category.name}</p>
                     </div>
 
                     <div class="w-full flex justify-start items-center px-2 gap-x-1">

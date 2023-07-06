@@ -5,6 +5,7 @@
     import ProfileHeader from '$lib/profileHeader.svelte';
     export let data
     const recipeData = data.getRecipes
+    const message = data.message || ""
     // JUST NEED TO LOAD DATA INTO PAGE WHOEVER IS WORKING ON UI
 </script>  
 

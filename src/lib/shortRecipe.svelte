@@ -1,10 +1,11 @@
 <script lang="ts">
   export let recipe: any;
   export let category_id: any
-  const picture = `https://recipes.eerieemu.com${recipe.image_path}` || `${recipe.picture}`
-  const anchorToRecipe = `/recipes/view/${recipe.slug}`
-
-  console.log(recipe.picture)
+    let picture: string
+    if (recipe.picture) {
+        picture = recipe.picture
+    } else picture = `https://recipes.eerieemu.com${recipe.image_path}` 
+    const anchorToRecipe = `/recipes/view/${recipe.slug}`
 </script>
 
 <div class="recipe-container w-full p-4 gap-x-4 flex justify-center items-start border-b border-gray-300">

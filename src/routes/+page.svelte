@@ -5,7 +5,7 @@
     let recipes = [];
     export let data
     const all_recipes = data.recipeData
-</script>  
+</script>
 
 <section class="center w-full h-screen relative flex justify-start items-center flex-col">
 
@@ -14,7 +14,7 @@
 
     <div class="overflow-y-auto mb-6">
         {#each all_recipes as recipe}
-            <ShortRecipe recipe={recipe} />
+            <ShortRecipe recipe={recipe} category_id=""/>
         {/each}
         <!-- <Communities  /> -->
     </div>
