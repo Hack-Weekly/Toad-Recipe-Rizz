@@ -1,7 +1,8 @@
-import { redirect, type ServerLoad } from "@sveltejs/kit";
+import { redirect } from "@sveltejs/kit";
 import { client } from "$lib/server/lucia";
+import type { PageServerLoad } from "./$types";
 
-export const load: ServerLoad = async ({ locals, params }) => {
+export const load: PageServerLoad = async ({ locals, params, parent }) => {
     const { session } =  await locals.auth.validateUser()
 
     if (!session) throw redirect(302, "http://localhost:5173")
@@ -15,9 +16,13 @@ export const load: ServerLoad = async ({ locals, params }) => {
             category_id: true,
         }
     })
-
+    const currentUserCategories = (await parent()).userCategories
+    currentUserCategories?.forEach(userCategory => {
+        if (userCategory.category.category_id === category?.category_id) {
+            throw redirect(302, "http://localhost:5173")
+        }
+    })
     const userId = session?.userId
-    console.log(userId)
     await client.user_Category.create({
         data: {
             category_id: category?.category_id,
@@ -25,5 +30,5 @@ export const load: ServerLoad = async ({ locals, params }) => {
         },
     })
     console.log("Category Added")
-    throw redirect(302, "http://localhost:5173/feed")
+    throw redirect(302, `http://localhost:5173/profile/${(await parent()).username}`)
 }

@@ -1,7 +1,8 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
     export let recipe: any
-    const picture = `https://recipes.eerieemu.com${recipe.picture}` || `${recipe.picture}`
+    let picture: string
+    recipe.picture.includes("cloudinary") ? picture = `${recipe.picture}` : picture = `https://recipes.eerieemu.com${recipe.picture}`
     const { recipe_name, recipe_creator, recipe_categories, cook_time, description, instructions, ingredients } = recipe
 </script>
 

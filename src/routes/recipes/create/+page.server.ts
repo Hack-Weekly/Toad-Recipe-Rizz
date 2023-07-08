@@ -21,7 +21,6 @@ export const load: PageServerLoad = async ({ locals }) => {
 }
 
 // Wrap Inner Logic In Try/Catch Later.
-// Send list items in a array in seperate POST request.
 export const actions: Actions = {
     default: async ({ request, locals }) => {
         const { session } = await locals.auth.validateUser()
@@ -30,7 +29,6 @@ export const actions: Actions = {
         const recipeThumbnail = recipeData.get('recipeThumbnail') as File
         const specialCharacters = '[`!@#$%^&*()_+=[]{};\':"\\|,.<>/?~]/'.split("")
         let recipeNameSlug = recipeName.split("")
-        console.log(categories, ingredients)
         for (const recipeNameChar of recipeNameSlug) {
          const isTrue = specialCharacters.some(char => char === recipeNameChar)
             if (isTrue) {
@@ -43,17 +41,13 @@ export const actions: Actions = {
             }
         }
         const recipeSlug = recipeNameSlug.join("").trim()
-        console.log(recipeSlug)
         const ingredientArr = ingredients.split(",")
-        const ingredientsObj = { "ingredients": ingredientArr }
         const categoriesArr = categories.split(",")
-
-        console.log(categoriesArr)
         const categoriesIdArr: any [] = []
         for (const categoryName of categoriesArr) {
           const category = await client.category.findFirst({
                 where: {
-                    name: categoryName,
+                    name: categoryName.trim(),
                 },
                 select: {
                     category_id: true,
@@ -62,7 +56,6 @@ export const actions: Actions = {
 
             categoriesIdArr.push(category?.category_id)
             }
-        console.log(categoriesIdArr)
         if (recipeThumbnail) {
         const con = cloudinary.config({
             cloud_name: VITE_CLOUDINARY_CLOUD_NAME,
@@ -79,7 +72,6 @@ export const actions: Actions = {
 
         const arrayBuffer = await recipeThumbnail.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer)
-        console.log(ingredientArr)
         const upload = cloudinary.uploader.upload_stream({
             resource_type: "image",
             folder: "recipes",
@@ -92,7 +84,7 @@ export const actions: Actions = {
                     name: recipeName,
                     user_id: session?.userId,
                     description: description,
-                    ingredients: ingredientsObj,
+                    ingredients: { ingredients: ingredientArr },
                     instructions: { instructions: instructions },
                     cook_time: cookTime,
                     slug: recipeSlug,
@@ -110,16 +102,14 @@ export const actions: Actions = {
                 name: true,
               },
           })
-    console.log(selectRecipe, recipeSlug)
     for (const categoryId of categoriesIdArr) {
       const createRecipeCategory = await client.recipe_Category.create({
         data: {
             category_id: categoryId,
-            recipe_id: selectRecipe?.id || "1111111",
+            recipe_id: selectRecipe?.id,
         },
       })
     }
-     console.log(selectRecipe, recipeSlug)
 
         }).end(buffer) 
         console.log(`${recipeName} Created!`)

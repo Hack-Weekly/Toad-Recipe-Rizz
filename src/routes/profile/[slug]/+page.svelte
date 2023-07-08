@@ -1,6 +1,4 @@
 <script lang="ts">
-    import { goto } from "$app/navigation";
-    import { enhance } from "$app/forms";
     import Communities from '$lib/communities.svelte';
     import ProfileHeader from "$lib/profileHeader.svelte";
     // @ts-ignore
@@ -8,7 +6,7 @@
     import UserProfilePageHeader from '$lib/UserProfilePageHeader.svelte';
     import { page } from '$app/stores';
     export let data;
-
+    console.log(data.recipes)
 </script>
 
 <section class="center w-full h-screen relative flex justify-start items-center flex-col">
@@ -16,7 +14,9 @@
     <UserProfilePageHeader {data}/>
 
     <div class="overflow-y-auto mt-24 border-t border-gray-300">
-            <ShortRecipe  />
+        {#each data.recipes as recipe}
+            <ShortRecipe {recipe} category_id=""/>
+        {/each}
         <div>
             <h2 class="mt-6 ml-8 text-xl">Joined communities:</h2>
             {#if $page.data.categories.length == 0}
