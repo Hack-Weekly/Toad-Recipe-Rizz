@@ -3,7 +3,6 @@ import { client } from "$lib/server/lucia"
 
 export const load: PageServerLoad = async ({ locals, fetch }) => {
     const { session } = await locals.auth.validateUser()
-    
     const response = await fetch("https://recipes.eerieemu.com/api/recipe/?format=json&page=1")
     // load data in a query param, or something idk this is for asam to figure out
     const recipeData: any[] = []
@@ -13,13 +12,11 @@ export const load: PageServerLoad = async ({ locals, fetch }) => {
     for (const recipe of defaultRecipesResults) {
         recipeData.push(recipe)
     }
-
-    console.log(recipeData, defaultRecipes)
     if (session) {
         return {
             // userIsLoggedIn: true
             session,
-            recipeData
+            recipeData,
         }
     } else {
       return { recipeData }

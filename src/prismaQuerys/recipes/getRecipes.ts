@@ -11,3 +11,5 @@ export const getRecipesByCategories = async (categoryIds: number[]) => await cli
         category_id: true,
     }
 })
+
+export const getAllCategories = async () => await client.category.findMany({})
