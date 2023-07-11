@@ -8,7 +8,7 @@ import { VITE_CLOUDINARY_CLOUD_NAME, VITE_CLOUDINARY_KEY, VITE_CLOUDINARY_SECRET
 export const load: PageServerLoad = async ({ locals }) => {
     const { session } = await locals.auth.validateUser()
     if (!session) {
-        throw redirect(302, "http://localhost:5173")
+        throw redirect(302, "/")
     }
     const categories = await client.category.findMany({
         select: {

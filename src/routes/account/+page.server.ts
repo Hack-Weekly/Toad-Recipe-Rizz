@@ -5,7 +5,7 @@ import { updateName, updateEmail, updatePassword, uploadPicture } from "./update
 export const load: PageServerLoad = async ({ locals, parent }) => {
     const { session } = await locals.auth.validateUser()
 
-    if (!session) throw redirect(302, "http://localhost:5173/auth/sign-up") // redirect user to sign-up if user tries to view profile
+    if (!session) throw redirect(302, "/auth/sign-up") // redirect user to sign-up if user tries to view profile
 
     const user = (await parent())
     const defaultAvatar = "https://i.ibb.co/5Gx5mc7/338178321-880290966603246-34525312457264604-n.jpg"
@@ -20,7 +20,7 @@ export const load: PageServerLoad = async ({ locals, parent }) => {
 export const actions: Actions = {
     default: async ({ request, locals }) => {
         const {session} = await locals.auth.validateUser()
-        if (!session) throw redirect(302, "http://localhost:5173")
+        if (!session) throw redirect(302, "/")
 
         const userId = session.userId;
         const account = await request.formData()

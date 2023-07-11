@@ -14,5 +14,5 @@ export const GET: RequestHandler = async ({ params, locals }) => {
     const user = await client.authUser.findUnique({ where: { id: session.userId }, select: { username: true } })
 
     console.log(`Recipe ${params.slug} Removed!`)
-    throw redirect(307, `http://localhost:5173/profile/${user?.username}/myrecipes`);
+    throw redirect(307, `/profile/${user?.username}/myrecipes`);
 };

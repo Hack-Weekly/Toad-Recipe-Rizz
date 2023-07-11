@@ -5,7 +5,7 @@ import { getRecipesByCategories } from "../../prismaQuerys/recipes/getRecipes";
 export const load: PageServerLoad = async ({ locals, parent }) => {
     const { session } = await locals.auth.validateUser()
     if (!session) {
-        throw redirect(302, "http://localhost:5173")
+        throw redirect(302, "/")
     }
 
     // load recipes from users, amar has the api connected in seperate branch we can merge later

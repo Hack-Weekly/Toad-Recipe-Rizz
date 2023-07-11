@@ -7,7 +7,7 @@ import md5 from 'md5';
 export const load: PageServerLoad = async ({ locals }) => {
     const { session } = await locals.auth.validateUser()
     console.log(session)
-    if (session) throw redirect(302, "http://localhost:5173/feed")
+    if (session) throw redirect(302, "/feed")
 }
 
 export const actions: Actions = {
