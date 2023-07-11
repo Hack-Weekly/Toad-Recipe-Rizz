@@ -9,7 +9,7 @@
 
     let searchValue1: string
     let searchValue2: string
-    function subscribeToRecipeOnEnter(ev, val: string) {
+    function subscribeToRecipeOnEnter(ev:any, val: string) {
         if (ev.key === "Enter") {
             goto(`/categories/follow/${val}`)
         }

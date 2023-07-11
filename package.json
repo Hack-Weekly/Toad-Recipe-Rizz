@@ -4,10 +4,10 @@
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build",
+		"build": "vite build && npx prisma generate",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
@@ -23,6 +23,7 @@
 		"@lucia-auth/adapter-prisma": "^2.0.0",
 		"@lucia-auth/sveltekit": "^0.6.11",
 		"@prisma/client": "^4.16.1",
+		"@sveltejs/adapter-vercel": "^3.0.2",
 		"@types/algoliasearch": "^4.0.0",
 		"@types/md5": "^2.3.2",
 		"@types/uuid4": "^2.0.0",
