@@ -7,7 +7,7 @@ import type { PageServerLoad } from "./$types";
 export const load: PageServerLoad = async ({ locals }) => {
     const { session } = await locals.auth.validateUser()
     if (session) {
-        throw redirect(302, "http://localhost:5173/feed")
+        throw redirect(302, "/feed")
     }
 }
 

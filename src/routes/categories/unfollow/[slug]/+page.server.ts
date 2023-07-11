@@ -4,7 +4,7 @@ import { client } from "$lib/server/lucia";
 export const load: ServerLoad = async ({ locals, params }) => {
     const { session } =  await locals.auth.validateUser()
 
-    if (!session) throw redirect(302, "http://localhost:5173")
+    if (!session) throw redirect(302, "/")
     // params.slug will pull the category id
     
     const category = await client.category.findFirst({
@@ -35,5 +35,5 @@ export const load: ServerLoad = async ({ locals, params }) => {
     })
 
     console.log("Category Removed!")
-    throw redirect(302, "http://localhost:5173/feed")
+    throw redirect(302, "/feed")
 }

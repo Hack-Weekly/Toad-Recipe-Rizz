@@ -6,7 +6,7 @@ import { client } from "$lib/server/lucia";
 export const load: PageServerLoad = async ({ params, parent }) => {
    const recipe = await getRecipe(params.slug)
    const userId = (await parent()).userId
-   if (userId !== recipe.recipe?.user_id || !userId) throw redirect(302, "http://localhost:5173/auth/sign-in")
+   if (userId !== recipe.recipe?.user_id || !userId) throw redirect(302, "/auth/sign-in")
 
    if (recipe) {
         return {
