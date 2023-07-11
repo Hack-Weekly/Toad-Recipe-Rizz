@@ -6,7 +6,6 @@
     import UserProfilePageHeader from '$lib/UserProfilePageHeader.svelte';
     import { page } from '$app/stores';
     export let data;
-    console.log(data.recipes)
 </script>
 
 <section class="center w-full h-screen relative flex justify-start items-center flex-col">
