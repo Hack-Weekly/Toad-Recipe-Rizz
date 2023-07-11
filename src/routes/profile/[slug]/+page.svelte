@@ -50,5 +50,3 @@
     </div>
 
 </section>
-<!-- <button on:click={() => goto(`http://localhost:5173/profile/${username}/myrecipes/delete/${slug}`)} class="bg-red-500 border-4 text-white">Delete</button>
-        <button on:click={() => goto(`http://localhost:5173/profile/${username}/myrecipes/update/${slug}`)} class="bg-blue-500 text-white">Update</button> -->

@@ -11,7 +11,7 @@
     let searchValue2: string
     function subscribeToRecipeOnEnter(ev, val: string) {
         if (ev.key === "Enter") {
-            goto(`http://localhost:5173/categories/follow/${val}`)
+            goto(`/categories/follow/${val}`)
         }
     }
 </script>
