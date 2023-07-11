@@ -1,10 +1,13 @@
 <script lang="ts">
+    
     // @ts-ignore
     import ShortRecipe from '$lib/shortRecipe.svelte';
     import ProfileHeader from '$lib/profileHeader.svelte';
     import { goto } from '$app/navigation';
+    import sad from '$lib/assets/sad.png';
     export let data
-    const all_recipes = data.recipeData
+    const recipeData = data.getRecipes
+    const message = data.message || ""
     const categories = data.categories
 
     let searchValue1: string
@@ -14,18 +17,30 @@
             goto(`/categories/follow/${val}`)
         }
     }
-</script>
+    // JUST NEED TO LOAD DATA INTO PAGE WHOEVER IS WORKING ON UI
+</script>  
 
 <section class="center w-full h-screen relative flex justify-start items-center flex-col">
-
 
     <ProfileHeader />
 
     <div class="overflow-y-auto mb-6">
-        {#each all_recipes as recipe}
-            <ShortRecipe recipe={recipe} category_id=""/>
-        {/each}
-        <!-- <Communities  /> -->
+        {#if recipeData}
+            {#each recipeData as { category_id, recipe }}
+                <ShortRecipe {recipe} {category_id} />
+            {/each}
+        {:else}
+            <div class="flex flex-col items-center gap-3">
+                <p class="text-center text-lg md:text-xl text-gray-400 mt-24">
+                    Your feed looks a little bit empty
+                </p>
+                <p class="text-center text-lg md:text-xl text-gray-400 flex flex-col md:flex-row  items-center gap-1">
+                    <span>try following some</span> 
+                    <a href="/communities" class="text-blue-400 underline ">communities</a>
+                </p>
+                <img class="h-auto w-16 md:w-24 mt-12" src="{sad}" alt="Emoji">
+            </div>
+        {/if}
     </div>
 
     <div class="search w-full p-4 border-t border-gray-300 hidden max-xl:block">
@@ -58,6 +73,7 @@
                     <option value="{value.name}"/>
                 {/each}
             </datalist>
+
         </div>
     </div>
 
