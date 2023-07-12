@@ -55,7 +55,7 @@ export const actions: Actions = {
         if (failedUpdates.length > 0) {
             return fail(400, { message: failedUpdates });
         } else {
-            return fail(200, { message: "Updated successfully" });
+            return { code: 200, message: "Updated successfully" };
 
         }
     }

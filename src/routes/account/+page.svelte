@@ -75,13 +75,21 @@
      </div>
      
      {#if form?.message}
-        <div role="alert" class="{form.message == "Updated successfully" ? "border-green-600 bg-green-50" : "border-red-500 bg-red-50"} rounded border-s-4 p-4 mt-2">
-            <strong class="{form.message == "Updated successfully" ? "text-green-700" : "text-red-800" } block font-medium">{form.message == "Updated successfully" ? "Success" : "Something went wrong"}</strong>
+        <div role="alert" class="border-red-500 bg-red-50 rounded border-s-4 p-4 mt-2">
+            <strong class="text-red-800 block font-medium">Something went wrong</strong>
             {#each form.message as msg}
-                <p class="mt-2 text-sm {form.message == "Updated successfully" ? "text-green-700" : "text-red-800" }">
-                    {msg.message ? msg.message : 'updated successfully'}
+                <p class="mt-2 text-sm text-red-800">
+                    {msg.message}
                 </p>
             {/each}
+        </div>
+    {/if}
+    {#if form?.code === 200}
+        <div role="alert" class="border-green-600 bg-green-50 rounded border-s-4 p-4 mt-2">
+            <strong class="text-green-800 block font-medium">Success!</strong>
+            <p class="mt-2 text-sm text-green-800">
+                {msg.message}
+            </p>
         </div>
     {/if}
 
